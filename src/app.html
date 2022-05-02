@@ -7,6 +7,15 @@
 		%svelte.head%
 	</head>
 	<body>
+		<script>
+			const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+
+			if (currentTheme) {
+				document.documentElement.setAttribute('data-theme', currentTheme);
+			} else {
+				document.documentElement.setAttribute('data-theme', 'light');
+			}
+		</script>
 		<div>%svelte.body%</div>
 	</body>
 </html>
