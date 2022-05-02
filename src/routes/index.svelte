@@ -1,2 +1,10 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<section class="container">
+	<h1>Index page</h1>
+</section>
+
+<style>
+	h1 {
+		font-family: var(--ff-display);
+		font-size: 3rem;
+	}
+</style>

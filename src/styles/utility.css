@@ -1,0 +1,69 @@
+/* Layouts */
+.container {
+	padding: 1rem;
+}
+
+/* Flexbox */
+.flex {
+	display: flex;
+}
+
+.gap {
+	gap: var(--gap, 1rem);
+}
+
+.flex-row {
+	display: flex;
+	flex-direction: row;
+}
+
+.flex-col {
+	display: flex;
+	flex-direction: column;
+}
+
+.flex-1 {
+	flex: 1;
+}
+
+/* Media queries */
+.mobile {
+	display: none;
+}
+
+@media screen and (max-width: 768px) {
+	.desktop {
+		display: none;
+	}
+}
+
+/* Fonts */
+.ff-mono {
+	font-family: var(--font-mono);
+}
+
+.ff-sans {
+	font-family: var(--font-sans);
+}
+
+.ff-display {
+	font-family: var(--font-display);
+}
+
+/* Spaces */
+
+.flow > * + * {
+	margin-top: var(--flow-space, 1rem);
+}
+
+.ml-auto {
+	margin-left: auto;
+}
+
+.ml-4 {
+	margin-left: 1rem;
+}
+
+.mt-4 {
+	margin-top: 1rem;
+}

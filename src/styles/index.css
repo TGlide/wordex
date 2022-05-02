@@ -1,0 +1,14 @@
+@import './reset.css';
+@import './theme.css';
+@import './utility.css';
+
+/* ------ */
+/* Styles */
+/* ------ */
+
+body {
+	min-height: 100vh;
+	background-color: var(--bg);
+	color: var(--primary);
+	margin: 0;
+}

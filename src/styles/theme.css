@@ -1,0 +1,212 @@
+@import '@fontsource/eb-garamond';
+
+:root {
+	/* ----- */
+	/* Fonts */
+	/* ----- */
+	--ff-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+		'Open Sans', 'Helvetica Neue', sans-serif;
+	--ff-display: 'EB Garamond', serif;
+	--ff-mono: monospace;
+	font-family: var(--ff-sans);
+
+	/* ------ */
+	/* Spaces */
+	/* ------ */
+
+	/* Radius */
+	--radii-sm: 0.25rem;
+	--radii-md: 0.5rem;
+	--radii-lg: 1rem;
+	--radii-full: 9999px;
+
+	/* ------- */
+	/* Palette */
+	/* ------- */
+
+	/* Greyscale */
+	--black-hsl: 216, 12.2%, 8%;
+	--black: hsl(var(--black-hsl));
+
+	--white-hsl: 0, 0%, 100%;
+	--white: hsl(var(--white-hsl));
+
+	--base-grey: 210, 10%;
+	--palette-grey-10-hsl: var(--base-grey), 10%;
+	--palette-grey-10: hsla(var(--palette-grey-10-hsl), 100%);
+	--palette-grey-15-hsl: var(--base-grey), 15%;
+	--palette-grey-15: hsla(var(--palette-grey-15-hsl), 100%);
+	--palette-grey-20-hsl: var(--base-grey), 20%;
+	--palette-grey-20: hsla(var(--palette-grey-20-hsl), 100%);
+	--palette-grey-30-hsl: var(--base-grey), 30%;
+	--palette-grey-30: hsla(var(--palette-grey-30-hsl), 100%);
+	--palette-grey-40-hsl: var(--base-grey), 40%;
+	--palette-grey-40: hsla(var(--palette-grey-40-hsl), 100%);
+	--palette-grey-50-hsl: var(--base-grey), 50%;
+	--palette-grey-50: hsla(var(--palette-grey-50-hsl), 100%);
+	--palette-grey-60-hsl: var(--base-grey), 60%;
+	--palette-grey-60: hsla(var(--palette-grey-60-hsl), 100%);
+	--palette-grey-70-hsl: var(--base-grey), 70%;
+	--palette-grey-70: hsla(var(--palette-grey-70-hsl), 100%);
+	--palette-grey-80-hsl: var(--base-grey), 80%;
+	--palette-grey-80: hsla(var(--palette-grey-80-hsl), 100%);
+	--palette-grey-90-hsl: var(--base-grey), 90%;
+	--palette-grey-90: hsla(var(--palette-grey-90-hsl), 100%);
+	--palette-grey-100-hsl: var(--base-grey), 100%;
+	--palette-grey-100: hsla(var(--palette-grey-100-hsl), 100%);
+
+	/* Red */
+	--base-red: 359, 82%;
+	--palette-red-10-hsl: var(--base-red), 10%;
+	--palette-red-10: hsla(var(--palette-red-10-hsl), 100%);
+	--palette-red-20-hsl: var(--base-red), 20%;
+	--palette-red-20: hsla(var(--palette-red-20-hsl), 100%);
+	--palette-red-30-hsl: var(--base-red), 30%;
+	--palette-red-30: hsla(var(--palette-red-30-hsl), 100%);
+	--palette-red-40-hsl: var(--base-red), 40%;
+	--palette-red-40: hsla(var(--palette-red-40-hsl), 100%);
+	--palette-red-50-hsl: var(--base-red), 50%;
+	--palette-red-50: hsla(var(--palette-red-50-hsl), 100%);
+	--palette-red-60-hsl: var(--base-red), 60%;
+	--palette-red-60: hsla(var(--palette-red-60-hsl), 100%);
+	--palette-red-70-hsl: var(--base-red), 70%;
+	--palette-red-70: hsla(var(--palette-red-70-hsl), 100%);
+	--palette-red-80-hsl: var(--base-red), 80%;
+	--palette-red-80: hsla(var(--palette-red-80-hsl), 100%);
+	--palette-red-90-hsl: var(--base-red), 90%;
+	--palette-red-90: hsla(var(--palette-red-90-hsl), 100%);
+	--palette-red-100-hsl: var(--base-red), 100%;
+	--palette-red-100: hsla(var(--palette-red-100-hsl), 100%);
+
+	/* Green */
+	--base-green: 133.26, 55%;
+	--palette-green-10-hsl: var(--base-green), 10%;
+	--palette-green-10: hsla(var(--palette-green-10-hsl), 100%);
+	--palette-green-20-hsl: var(--base-green), 20%;
+	--palette-green-20: hsla(var(--palette-green-20-hsl), 100%);
+	--palette-green-30-hsl: var(--base-green), 30%;
+	--palette-green-30: hsla(var(--palette-green-30-hsl), 100%);
+	--palette-green-40-hsl: var(--base-green), 40%;
+	--palette-green-40: hsla(var(--palette-green-40-hsl), 100%);
+	--palette-green-50-hsl: var(--base-green), 50%;
+	--palette-green-50: hsla(var(--palette-green-50-hsl), 100%);
+	--palette-green-60-hsl: var(--base-green), 60%;
+	--palette-green-60: hsla(var(--palette-green-60-hsl), 100%);
+	--palette-green-70-hsl: var(--base-green), 70%;
+	--palette-green-70: hsla(var(--palette-green-70-hsl), 100%);
+	--palette-green-80-hsl: var(--base-green), 80%;
+	--palette-green-80: hsla(var(--palette-green-80-hsl), 100%);
+	--palette-green-90-hsl: var(--base-green), 90%;
+	--palette-green-90: hsla(var(--palette-green-90-hsl), 100%);
+	--palette-green-100-hsl: var(--base-green), 100%;
+	--palette-green-100: hsla(var(--palette-green-100-hsl), 100%);
+
+	/* Blue */
+	--base-blue: 237.69, 100%;
+	--palette-blue-0-hsl: var(--base-blue), 0%;
+	--palette-blue-0: hsla(var(--palette-blue-0-hsl), 100%);
+	--palette-blue-10-hsl: var(--base-blue), 10%;
+	--palette-blue-10: hsla(var(--palette-blue-10-hsl), 100%);
+	--palette-blue-20-hsl: var(--base-blue), 20%;
+	--palette-blue-20: hsla(var(--palette-blue-20-hsl), 100%);
+	--palette-blue-30-hsl: var(--base-blue), 30%;
+	--palette-blue-30: hsla(var(--palette-blue-30-hsl), 100%);
+	--palette-blue-40-hsl: var(--base-blue), 40%;
+	--palette-blue-40: hsla(var(--palette-blue-40-hsl), 100%);
+	--palette-blue-50-hsl: var(--base-blue), 50%;
+	--palette-blue-50: hsla(var(--palette-blue-50-hsl), 100%);
+	--palette-blue-60-hsl: var(--base-blue), 60%;
+	--palette-blue-60: hsla(var(--palette-blue-60-hsl), 100%);
+	--palette-blue-70-hsl: var(--base-blue), 70%;
+	--palette-blue-70: hsla(var(--palette-blue-70-hsl), 100%);
+	--palette-blue-80-hsl: var(--base-blue), 80%;
+	--palette-blue-80: hsla(var(--palette-blue-80-hsl), 100%);
+	--palette-blue-90-hsl: var(--base-blue), 90%;
+	--palette-blue-90: hsla(var(--palette-blue-90-hsl), 100%);
+	--palette-blue-100-hsl: var(--base-blue), 100%;
+	--palette-blue-100: hsla(var(--palette-blue-100-hsl), 100%);
+
+	/* Purple */
+	--base-purple: 263, 100%;
+	--palette-purple-10-hsl: var(--base-purple), 10%;
+	--palette-purple-10: hsla(var(--palette-purple-10-hsl), 100%);
+	--palette-purple-20-hsl: var(--base-purple), 20%;
+	--palette-purple-20: hsla(var(--palette-purple-20-hsl), 100%);
+	--palette-purple-30-hsl: var(--base-purple), 30%;
+	--palette-purple-30: hsla(var(--palette-purple-30-hsl), 100%);
+	--palette-purple-40-hsl: var(--base-purple), 40%;
+	--palette-purple-40: hsla(var(--palette-purple-40-hsl), 100%);
+	--palette-purple-50-hsl: var(--base-purple), 50%;
+	--palette-purple-50: hsla(var(--palette-purple-50-hsl), 100%);
+	--palette-purple-60-hsl: var(--base-purple), 60%;
+	--palette-purple-60: hsla(var(--palette-purple-60-hsl), 100%);
+	--palette-purple-70-hsl: var(--base-purple), 70%;
+	--palette-purple-70: hsla(var(--palette-purple-70-hsl), 100%);
+	--palette-purple-80-hsl: var(--base-purple), 80%;
+	--palette-purple-80: hsla(var(--palette-purple-80-hsl), 100%);
+	--palette-purple-90-hsl: var(--base-purple), 90%;
+	--palette-purple-90: hsla(var(--palette-purple-90-hsl), 100%);
+	--palette-purple-100-hsl: var(--base-purple), 100%;
+	--palette-purple-100: hsla(var(--palette-purple-100-hsl), 100%);
+
+	/* Cyan */
+	--base-cyan: 200, 80%;
+	--palette-cyan-10-hsl: var(--base-cyan), 10%;
+	--palette-cyan-10: hsla(var(--palette-cyan-10-hsl), 100%);
+	--palette-cyan-20-hsl: var(--base-cyan), 20%;
+	--palette-cyan-20: hsla(var(--palette-cyan-20-hsl), 100%);
+	--palette-cyan-30-hsl: var(--base-cyan), 30%;
+	--palette-cyan-30: hsla(var(--palette-cyan-30-hsl), 100%);
+	--palette-cyan-40-hsl: var(--base-cyan), 40%;
+	--palette-cyan-40: hsla(var(--palette-cyan-40-hsl), 100%);
+	--palette-cyan-50-hsl: var(--base-cyan), 50%;
+	--palette-cyan-50: hsla(var(--palette-cyan-50-hsl), 100%);
+	--palette-cyan-60-hsl: var(--base-cyan), 60%;
+	--palette-cyan-60: hsla(var(--palette-cyan-60-hsl), 100%);
+	--palette-cyan-70-hsl: var(--base-cyan), 70%;
+	--palette-cyan-70: hsla(var(--palette-cyan-70-hsl), 100%);
+	--palette-cyan-80-hsl: var(--base-cyan), 80%;
+	--palette-cyan-80: hsla(var(--palette-cyan-80-hsl), 100%);
+	--palette-cyan-90-hsl: var(--base-cyan), 90%;
+	--palette-cyan-90: hsla(var(--palette-cyan-90-hsl), 100%);
+	--palette-cyan-95-hsl: var(--base-cyan), 95%;
+	--palette-cyan-95: hsla(var(--palette-cyan-95-hsl), 100%);
+	--palette-cyan-100-hsl: var(--base-cyan), 100%;
+	--palette-cyan-100: hsla(var(--palette-cyan-100-hsl), 100%);
+
+	/* Yellow */
+	--base-yellow: 50, 90%;
+	--palette-yellow-10-hsl: var(--base-yellow), 10%;
+	--palette-yellow-10: hsla(var(--palette-yellow-10-hsl), 100%);
+	--palette-yellow-20-hsl: var(--base-yellow), 20%;
+	--palette-yellow-20: hsla(var(--palette-yellow-20-hsl), 100%);
+	--palette-yellow-30-hsl: var(--base-yellow), 30%;
+	--palette-yellow-30: hsla(var(--palette-yellow-30-hsl), 100%);
+	--palette-yellow-40-hsl: var(--base-yellow), 40%;
+	--palette-yellow-40: hsla(var(--palette-yellow-40-hsl), 100%);
+	--palette-yellow-50-hsl: var(--base-yellow), 50%;
+	--palette-yellow-50: hsla(var(--palette-yellow-50-hsl), 100%);
+	--palette-yellow-60-hsl: var(--base-yellow), 60%;
+	--palette-yellow-60: hsla(var(--palette-yellow-60-hsl), 100%);
+	--palette-yellow-70-hsl: var(--base-yellow), 70%;
+	--palette-yellow-70: hsla(var(--palette-yellow-70-hsl), 100%);
+	--palette-yellow-80-hsl: var(--base-yellow), 80%;
+	--palette-yellow-80: hsla(var(--palette-yellow-80-hsl), 100%);
+	--palette-yellow-90-hsl: var(--base-yellow), 90%;
+	--palette-yellow-90: hsla(var(--palette-yellow-90-hsl), 100%);
+	--palette-yellow-100-hsl: var(--base-yellow), 100%;
+	--palette-yellow-100: hsla(var(--palette-yellow-100-hsl), 100%);
+
+	/* Semantic colors */
+	--bg-hsl: var(--white-hsl);
+	--bg: hsl(var(--bg-hsl));
+	--primary-hsl: var(--palette-grey-10-hsl);
+	--primary: hsl(var(--primary-hsl));
+}
+
+[data-theme='dark'] {
+	--bg-hsl: var(--black-hsl);
+	--bg: hsl(var(--bg-hsl));
+	--primary-hsl: var(--white-hsl);
+	--primary: hsl(var(--primary-hsl));
+}
