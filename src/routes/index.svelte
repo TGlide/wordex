@@ -1,12 +1,13 @@
 <script>
 	import Keyboard from '$lib/components/Keyboard.svelte';
+	import WordGrid from '$lib/components/WordGrid.svelte';
 </script>
 
 <section class="container themed">
 	<h1>Wordex</h1>
-	<div class="keyboard-wrapper">
-		<Keyboard />
-	</div>
+
+	<WordGrid />
+	<Keyboard />
 </section>
 
 <style>

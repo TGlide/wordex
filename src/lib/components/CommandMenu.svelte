@@ -31,13 +31,13 @@
 	};
 
 	const onKeyDown = (event: KeyboardEvent) => {
-		if (!visible) return;
-
 		//  if cmd+k is pressed, toggle visible
 		if (event.metaKey && event.key === 'k') {
 			visible = !visible;
 			event.preventDefault();
 		}
+
+		if (!visible) return;
 
 		if (event.key === 'Escape') {
 			visible = false;
