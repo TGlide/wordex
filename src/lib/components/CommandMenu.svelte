@@ -11,14 +11,10 @@
 		{
 			label: 'Change theme',
 			onTrigger: switchTheme
-		},
-		{
-			label: 'xyz',
-			onTrigger: switchTheme
 		}
 	];
 
-	let visible = true;
+	let visible = false;
 	let query: string = '';
 	let selected: number = 0;
 
@@ -35,6 +31,8 @@
 	};
 
 	const onKeyDown = (event: KeyboardEvent) => {
+		if (!visible) return;
+
 		//  if cmd+k is pressed, toggle visible
 		if (event.metaKey && event.key === 'k') {
 			visible = !visible;

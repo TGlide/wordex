@@ -19,6 +19,14 @@
 	--radii-md: 0.5rem;
 	--radii-lg: 1rem;
 	--radii-full: 9999px;
+	--radii-full: 9999px;
+
+	/* ----------- */
+	/* Transitions */
+	/* ----------- */
+	--motion: 0.3s cubic-bezier(0.2, 1, 0.2, 1);
+	--smooth: 0.4s cubic-bezier(0.9, 0, 0.05, 1);
+	--appearance: 0.2s ease;
 
 	/* ------- */
 	/* Palette */
