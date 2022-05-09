@@ -1,14 +1,15 @@
 <script lang="ts">
+	import { wordStore } from '$lib/store';
 	import { range } from '$lib/utils/array';
 	import { isLetter } from '$lib/utils/string';
+	import { scale } from 'svelte/transition';
 
 	export let wordSize: number = 5;
 	export let maxTries: number = 6;
 
-	let words: Array<string[]> = [[]];
 	let letterIdx = 0;
 
-	$: isFull = words[words.length - 1].filter(isLetter).length === wordSize;
+	$: isFull = $wordStore[$wordStore.length - 1].filter(isLetter).length === wordSize;
 
 	const decrementLetterIdx = () => {
 		letterIdx = Math.max(letterIdx - 1, 0);
@@ -19,7 +20,9 @@
 	};
 
 	const onKeyDown = (event: KeyboardEvent) => {
-		let currentWord = words[words.length - 1];
+		if ($wordStore.length === maxTries + 1) return;
+
+		let currentWord = $wordStore[$wordStore.length - 1];
 
 		if (event.key === 'ArrowLeft') {
 			decrementLetterIdx();
@@ -29,24 +32,28 @@
 			incrementLetterIdx();
 		}
 
+		if (event.key === 'Enter' && isFull) {
+			$wordStore = [...$wordStore, ['']];
+			letterIdx = 0;
+			currentWord = [];
+		}
+
 		if (['Backspace', 'Delete'].includes(event.code)) {
-			if (!isLetter(currentWord[letterIdx - 1]) || !isLetter(currentWord[letterIdx])) {
+			if (!isLetter(currentWord[letterIdx])) {
 				decrementLetterIdx();
 			}
 			delete currentWord[letterIdx];
 		}
 
-		if (isLetter(event.key) && !isFull) {
+		if (isLetter(event.key)) {
 			currentWord[letterIdx] = event.key;
-			incrementLetterIdx();
+			if (!isFull) {
+				incrementLetterIdx();
+			}
 		}
 
-		words[words.length - 1] = currentWord;
+		$wordStore[$wordStore.length - 1] = currentWord;
 	};
-
-	$: {
-		console.log(words[words.length - 1]);
-	}
 </script>
 
 <svelte:window on:keydown={onKeyDown} />
@@ -54,8 +61,9 @@
 <div class="grid" style:--cols={wordSize}>
 	{#each range(0, maxTries) as row}
 		{#each range(0, wordSize) as col}
-			{@const selected = row === words.length - 1 && col === letterIdx}
-			{@const disabled = row !== words.length - 1}
+			{@const selected = row === $wordStore.length - 1 && col === letterIdx}
+			{@const disabled = row !== $wordStore.length - 1}
+			{@const letter = $wordStore[row]?.[col]}
 
 			<div
 				class="cell"
@@ -66,7 +74,9 @@
 					letterIdx = col;
 				}}
 			>
-				<span class="letter">{words[row]?.[col] ?? ''}</span>
+				{#if letter}
+					<span class="letter" transition:scale={{ duration: 250 }}>{letter}</span>
+				{/if}
 			</div>
 		{/each}
 	{/each}
