@@ -43,9 +43,9 @@
 
 		background-color: var(--palette-grey-20);
 		border-radius: var(--radii-sm);
-		font-size: 1.25rem;
+		font-size: 1rem;
 
-		--size: 4rem;
+		--size: 2.15rem;
 		width: var(--size);
 		height: var(--size);
 		transition: transform var(--motion), opacity var(--appearance);
@@ -60,6 +60,17 @@
 	}
 
 	button.enter span {
-		width: 10rem;
+		width: 5rem;
+	}
+
+	@media (min-width: 768px) {
+		span {
+			font-size: 1.25rem;
+			--size: 4rem;
+		}
+
+		button.enter span {
+			width: 10rem;
+		}
 	}
 </style>

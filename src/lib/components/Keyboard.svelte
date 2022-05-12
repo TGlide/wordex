@@ -48,7 +48,13 @@
 
 	section {
 		display: flex;
-		gap: 1rem;
+		gap: 0.25rem;
 		margin-top: 1rem;
+	}
+
+	@media (min-width: 768px) {
+		section {
+			gap: 1rem;
+		}
 	}
 </style>

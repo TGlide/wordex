@@ -15,7 +15,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: space-between;
-		min-height: 100vh;
+		height: 90vh;
 	}
 
 	h1 {
@@ -23,5 +23,11 @@
 		font-size: 3rem;
 		text-align: center;
 		font-weight: 600;
+	}
+
+	@media (min-width: 768px) {
+		section {
+			height: 100vh;
+		}
 	}
 </style>

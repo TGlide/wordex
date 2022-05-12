@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { isDevelopment } from '$lib/constants';
 	import { cmdMenuOpen } from '$lib/store/cmdMenu';
 	import { dailyWord, tries } from '$lib/store/tries';
 	import { range } from '$lib/utils/array';
@@ -125,7 +126,9 @@
 			{/each}
 		{/each}
 	</div>
-	<button on:click={tries.reset}>Reset</button>
+	{#if isDevelopment}
+		<button on:click={tries.reset}>Reset</button>
+	{/if}
 </div>
 
 <style>
@@ -177,13 +180,13 @@
 		border: 2px solid var(--border-color);
 		border-radius: var(--radii-md);
 
-		--size: 5rem;
+		--size: 3rem;
 		width: var(--size);
 		height: var(--size);
 
 		text-transform: uppercase;
 		font-weight: 800;
-		font-size: 2rem;
+		font-size: 1.25rem;
 	}
 
 	.cell--selected {
@@ -222,5 +225,12 @@
 		background-color: var(--palette-grey-20);
 		padding: 1rem;
 		cursor: pointer;
+	}
+
+	@media (min-width: 768px) {
+		.cell {
+			--size: 5rem;
+			font-size: 2rem;
+		}
 	}
 </style>
