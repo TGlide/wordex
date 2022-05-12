@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { isDevelopment } from '$lib/constants';
 	import { cmdMenuOpen } from '$lib/store/cmdMenu';
+	import { keyDispatcher } from '$lib/store/keyDispatcher';
 	import { dailyWord, tries } from '$lib/store/tries';
 	import { range } from '$lib/utils/array';
 	import { isLetter } from '$lib/utils/string';
 	import type { VariantProps } from 'class-variance-authority';
 	import { cva } from 'class-variance-authority';
+	import { onMount } from 'svelte';
 	import { scale } from 'svelte/transition';
 
 	// Props
@@ -16,6 +18,17 @@
 	let letterIdx = 0;
 	$: isFull = $tries[$tries.length - 1].filter(isLetter).length === wordSize;
 
+	// Lifecycle
+	onMount(() => {
+		const listener = keyDispatcher.addListener((key, code) => {
+			onKeyDown({ key: key.toLowerCase(), code } as any);
+		});
+
+		return () => {
+			keyDispatcher.removeListener(listener);
+		};
+	});
+
 	// Methods
 	const decrementLetterIdx = () => {
 		letterIdx = Math.max(letterIdx - 1, 0);
@@ -25,7 +38,7 @@
 		letterIdx = Math.min(letterIdx + 1, wordSize - 1);
 	};
 
-	const onKeyDown = (event: KeyboardEvent) => {
+	const onKeyDown = (event: Pick<KeyboardEvent, 'metaKey' | 'key' | 'code'>) => {
 		if (!!event.metaKey || $cmdMenuOpen || $tries.length === maxTries + 1) return;
 
 		let currentWord = $tries[$tries.length - 1];
@@ -36,7 +49,7 @@
 			incrementLetterIdx();
 		}
 
-		if (event.key === 'Enter' && isFull) {
+		if (event.key.toLowerCase() === 'enter' && isFull) {
 			$tries = [...$tries, ['']];
 			letterIdx = 0;
 			currentWord = [];

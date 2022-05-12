@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { keyDispatcher } from '$lib/store/keyDispatcher';
+
 	export let key: string;
 	export let keyCodes: string[] | undefined = undefined;
 
@@ -16,16 +18,18 @@
 
 	const onClick = () => {
 		pressed = false;
+
+		if (keyCodes) {
+			keyDispatcher.dispatch(key, keyCodes[0]);
+		} else {
+			keyDispatcher.dispatch(key);
+		}
 	};
 </script>
 
-<svelte:window
-	on:keydown={(e) => onKey(e, 'down')}
-	on:keyup={(e) => onKey(e, 'up')}
-	on:click={onClick}
-/>
+<svelte:window on:keydown={(e) => onKey(e, 'down')} on:keyup={(e) => onKey(e, 'up')} />
 
-<button class:pressed class:enter={key === 'enter'}>
+<button class:pressed class:enter={key === 'enter'} on:click={onClick}>
 	<span>
 		{key}
 	</span>
