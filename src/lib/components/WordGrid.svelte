@@ -16,12 +16,13 @@
 	// State
 	let letterIdx = 0;
 
-	$: isFull = $tries[$tries.length - 1].filter(isLetter).length === wordSize;
+	$: isFull = $tries[$tries.length - 1]?.filter(isLetter).length === wordSize;
+	$: hasWon = $tries[$tries.length - 2]?.join('') === $dailyWord;
 
 	// Lifecycle
 	onMount(() => {
 		const listener = keyDispatcher.addListener((key, code) => {
-			onKeyDown({ key: key.toLowerCase(), code } as any);
+			onKeyDown({ key: key.toLowerCase(), code: code ?? '', metaKey: false });
 		});
 
 		return () => {
@@ -39,7 +40,7 @@
 	};
 
 	const onKeyDown = (event: Pick<KeyboardEvent, 'metaKey' | 'key' | 'code'>) => {
-		if (!!event.metaKey || $cmdMenuOpen || $tries.length === maxTries + 1) return;
+		if (!!event.metaKey || $cmdMenuOpen || $tries.length === maxTries + 1 || hasWon) return;
 
 		let currentWord = $tries[$tries.length - 1];
 
@@ -80,30 +81,22 @@
 				present: 'cell--present',
 				absent: 'cell--absent',
 				selected: 'cell--selected'
-			},
-			old: {
-				true: 'cell--old'
 			}
 		}
 	});
 
 	type CellState = VariantProps<typeof cell>['state'];
 
-	const getCellState = (
-		row: number,
-		col: number,
-		tries: typeof $tries,
-		letterIdx: number
-	): CellState => {
-		const cellLetter = tries[row]?.[col];
+	$: getCellState = (row: number, col: number): CellState => {
+		const cellLetter = $tries[row]?.[col];
 
 		const state: CellState = undefined;
 
-		if (row === tries.length - 1 && col === letterIdx) {
+		if (row === $tries.length - 1 && col === letterIdx && !hasWon) {
 			return 'selected';
 		}
 
-		if (row < tries.length - 1) {
+		if (row < $tries.length - 1) {
 			if (cellLetter === $dailyWord[col]) {
 				return 'correct';
 			} else if ($dailyWord.includes(cellLetter ?? '')) {
@@ -126,7 +119,7 @@
 				{@const letter = $tries[row]?.[col]}
 
 				<div
-					class={cell({ state: getCellState(row, col, $tries, letterIdx) })}
+					class={cell({ state: getCellState(row, col) })}
 					style:animation-delay={`${col * 0.25}s`}
 					on:click={() => {
 						letterIdx = col;
