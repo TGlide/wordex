@@ -16,8 +16,10 @@
 	// State
 	let letterIdx = 0;
 
-	$: isFull = $store.tries[$store.tries.length - 1]?.filter(isLetter).length === wordSize;
-	$: hasWon = $store.tries[$store.tries.length - 2]?.join('') === normalizeString($store.dailyWord);
+	$: currentTry = $store.tries[$store.tries.length - 1];
+	$: lastTry = $store.tries[$store.tries.length - 2];
+	$: isFull = currentTry?.filter(isLetter).length === wordSize;
+	$: hasWon = lastTry?.join('') === normalizeString($store.dailyWord);
 
 	// Lifecycle
 	onMount(() => {
