@@ -8,7 +8,9 @@ export function localStorageWritable<T>(key: string, defaultValue?: T) {
 	const store: Writable<T> = writable(initialData);
 
 	const set: typeof store.set = (value) => {
-		localStorage.setItem(key, JSON.stringify(value));
+		if (browser) {
+			localStorage.setItem(key, JSON.stringify(value));
+		}
 		store.set(value);
 	};
 

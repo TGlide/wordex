@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { store } from '$lib/store';
 	import { cmdMenuOpen } from '$lib/store/cmdMenu';
 	import { keyDispatcher } from '$lib/store/keyDispatcher';
-	import { dailyWord, tries } from '$lib/store/tries';
 	import { range } from '$lib/utils/array';
-	import { isLetter } from '$lib/utils/string';
+	import { isLetter, normalizeString } from '$lib/utils/string';
 	import type { VariantProps } from 'class-variance-authority';
 	import { cva } from 'class-variance-authority';
 	import { onMount } from 'svelte';
@@ -16,8 +16,8 @@
 	// State
 	let letterIdx = 0;
 
-	$: isFull = $tries[$tries.length - 1]?.filter(isLetter).length === wordSize;
-	$: hasWon = $tries[$tries.length - 2]?.join('') === $dailyWord;
+	$: isFull = $store.tries[$store.tries.length - 1]?.filter(isLetter).length === wordSize;
+	$: hasWon = $store.tries[$store.tries.length - 2]?.join('') === normalizeString($store.dailyWord);
 
 	// Lifecycle
 	onMount(() => {
@@ -40,9 +40,9 @@
 	};
 
 	const onKeyDown = (event: Pick<KeyboardEvent, 'metaKey' | 'key' | 'code'>) => {
-		if (!!event.metaKey || $cmdMenuOpen || $tries.length === maxTries + 1 || hasWon) return;
+		if (!!event.metaKey || $cmdMenuOpen || $store.tries.length === maxTries + 1 || hasWon) return;
 
-		let currentWord = $tries[$tries.length - 1];
+		let currentWord = $store.tries[$store.tries.length - 1];
 
 		if (event.key === 'ArrowLeft') {
 			decrementLetterIdx();
@@ -51,7 +51,7 @@
 		}
 
 		if (event.key.toLowerCase() === 'enter' && isFull) {
-			$tries = [...$tries, ['']];
+			$store.tries = [...$store.tries, ['']];
 			letterIdx = 0;
 			currentWord = [];
 		}
@@ -70,7 +70,7 @@
 			}
 		}
 
-		$tries[$tries.length - 1] = currentWord;
+		$store.tries[$store.tries.length - 1] = currentWord;
 	};
 
 	// Cell component
@@ -88,18 +88,18 @@
 	type CellState = VariantProps<typeof cell>['state'];
 
 	$: getCellState = (row: number, col: number): CellState => {
-		const cellLetter = $tries[row]?.[col];
+		const cellLetter = $store.tries[row]?.[col];
 
 		const state: CellState = undefined;
 
-		if (row === $tries.length - 1 && col === letterIdx && !hasWon) {
+		if (row === $store.tries.length - 1 && col === letterIdx && !hasWon) {
 			return 'selected';
 		}
 
-		if (row < $tries.length - 1) {
-			if (cellLetter === $dailyWord[col]) {
+		if (row < $store.tries.length - 1) {
+			if (cellLetter === normalizeString($store.dailyWord)[col]) {
 				return 'correct';
-			} else if ($dailyWord.includes(cellLetter ?? '')) {
+			} else if ($store.dailyWord.includes(cellLetter ?? '')) {
 				return 'present';
 			} else {
 				return 'absent';
@@ -112,26 +112,24 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div>
-	<div class="grid" style:--cols={wordSize}>
-		{#each range(0, maxTries) as row}
-			{#each range(0, wordSize) as col}
-				{@const letter = $tries[row]?.[col]}
+<div class="grid" style:--cols={wordSize}>
+	{#each range(0, maxTries) as row}
+		{#each range(0, wordSize) as col}
+			{@const letter = $store.tries[row]?.[col]}
 
-				<div
-					class={cell({ state: getCellState(row, col) })}
-					style:animation-delay={`${col * 0.25}s`}
-					on:click={() => {
-						letterIdx = col;
-					}}
-				>
-					{#if letter}
-						<span class="letter" transition:scale|local={{ duration: 250 }}>{letter}</span>
-					{/if}
-				</div>
-			{/each}
+			<div
+				class={cell({ state: getCellState(row, col) })}
+				style:animation-delay={`${col * 0.25}s`}
+				on:click={() => {
+					letterIdx = col;
+				}}
+			>
+				{#if letter}
+					<span class="letter" transition:scale|local={{ duration: 250 }}>{letter}</span>
+				{/if}
+			</div>
 		{/each}
-	</div>
+	{/each}
 </div>
 
 <style>
