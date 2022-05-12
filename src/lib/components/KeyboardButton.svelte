@@ -8,20 +8,22 @@
 		return event.key.toLowerCase() === key.toLowerCase() || keyCodes?.includes(event.code);
 	};
 
-	const onKeyDown = (event: KeyboardEvent) => {
-		if (eventHasKey(event)) {
-			pressed = true;
+	const onKey = (event: KeyboardEvent, action: 'up' | 'down') => {
+		if (!event.metaKey && eventHasKey(event)) {
+			pressed = action === 'down';
 		}
 	};
 
-	const onKeyUp = (event: KeyboardEvent) => {
-		if (eventHasKey(event)) {
-			pressed = false;
-		}
+	const onClick = () => {
+		pressed = false;
 	};
 </script>
 
-<svelte:window on:keydown={onKeyDown} on:keyup={onKeyUp} />
+<svelte:window
+	on:keydown={(e) => onKey(e, 'down')}
+	on:keyup={(e) => onKey(e, 'up')}
+	on:click={onClick}
+/>
 
 <button class:pressed class:enter={key === 'enter'}>
 	<span>

@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { wordStore } from '$lib/store';
+	import { cmdMenuOpen } from '$lib/store/cmdMenu';
+	import { wordStore } from '$lib/store/word';
 	import { range } from '$lib/utils/array';
 	import { isLetter } from '$lib/utils/string';
 	import { scale } from 'svelte/transition';
@@ -20,7 +21,7 @@
 	};
 
 	const onKeyDown = (event: KeyboardEvent) => {
-		if ($wordStore.length === maxTries + 1) return;
+		if (!!event.metaKey || $cmdMenuOpen || $wordStore.length === maxTries + 1) return;
 
 		let currentWord = $wordStore[$wordStore.length - 1];
 
