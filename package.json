@@ -33,6 +33,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@fontsource/eb-garamond": "^4.5.8"
+		"@fontsource/eb-garamond": "^4.5.8",
+		"class-variance-authority": "^0.2.1"
 	}
 }

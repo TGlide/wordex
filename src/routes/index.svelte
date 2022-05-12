@@ -5,7 +5,6 @@
 
 <section class="container themed">
 	<h1>Wordex</h1>
-
 	<WordGrid />
 	<Keyboard />
 </section>

@@ -1,17 +1,21 @@
 <script lang="ts">
 	import { cmdMenuOpen } from '$lib/store/cmdMenu';
-	import { wordStore } from '$lib/store/word';
+	import { dailyWord, tries } from '$lib/store/tries';
 	import { range } from '$lib/utils/array';
 	import { isLetter } from '$lib/utils/string';
+	import type { VariantProps } from 'class-variance-authority';
+	import { cva } from 'class-variance-authority';
 	import { scale } from 'svelte/transition';
 
+	// Props
 	export let wordSize: number = 5;
 	export let maxTries: number = 6;
 
+	// State
 	let letterIdx = 0;
+	$: isFull = $tries[$tries.length - 1].filter(isLetter).length === wordSize;
 
-	$: isFull = $wordStore[$wordStore.length - 1].filter(isLetter).length === wordSize;
-
+	// Methods
 	const decrementLetterIdx = () => {
 		letterIdx = Math.max(letterIdx - 1, 0);
 	};
@@ -21,20 +25,18 @@
 	};
 
 	const onKeyDown = (event: KeyboardEvent) => {
-		if (!!event.metaKey || $cmdMenuOpen || $wordStore.length === maxTries + 1) return;
+		if (!!event.metaKey || $cmdMenuOpen || $tries.length === maxTries + 1) return;
 
-		let currentWord = $wordStore[$wordStore.length - 1];
+		let currentWord = $tries[$tries.length - 1];
 
 		if (event.key === 'ArrowLeft') {
 			decrementLetterIdx();
-		}
-
-		if (event.key === 'ArrowRight') {
+		} else if (event.key === 'ArrowRight') {
 			incrementLetterIdx();
 		}
 
 		if (event.key === 'Enter' && isFull) {
-			$wordStore = [...$wordStore, ['']];
+			$tries = [...$tries, ['']];
 			letterIdx = 0;
 			currentWord = [];
 		}
@@ -53,49 +55,127 @@
 			}
 		}
 
-		$wordStore[$wordStore.length - 1] = currentWord;
+		$tries[$tries.length - 1] = currentWord;
+	};
+
+	// Cell component
+	const cell = cva('cell', {
+		variants: {
+			state: {
+				correct: 'cell--correct',
+				present: 'cell--present',
+				absent: 'cell--absent',
+				selected: 'cell--selected'
+			},
+			old: {
+				true: 'cell--old'
+			}
+		}
+	});
+
+	type CellState = VariantProps<typeof cell>['state'];
+
+	const getCellState = (
+		row: number,
+		col: number,
+		tries: typeof $tries,
+		letterIdx: number
+	): CellState => {
+		const cellLetter = tries[row]?.[col];
+
+		const state: CellState = undefined;
+
+		if (row === tries.length - 1 && col === letterIdx) {
+			return 'selected';
+		}
+
+		if (row < tries.length - 1) {
+			if (cellLetter === $dailyWord[col]) {
+				return 'correct';
+			} else if ($dailyWord.includes(cellLetter ?? '')) {
+				return 'present';
+			} else {
+				return 'absent';
+			}
+		}
+
+		return state;
 	};
 </script>
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div class="grid" style:--cols={wordSize}>
-	{#each range(0, maxTries) as row}
-		{#each range(0, wordSize) as col}
-			{@const selected = row === $wordStore.length - 1 && col === letterIdx}
-			{@const disabled = row !== $wordStore.length - 1}
-			{@const letter = $wordStore[row]?.[col]}
+<div>
+	<div class="grid" style:--cols={wordSize}>
+		{#each range(0, maxTries) as row}
+			{#each range(0, wordSize) as col}
+				{@const letter = $tries[row]?.[col]}
 
-			<div
-				class="cell"
-				class:disabled
-				class:selected
-				on:click={() => {
-					if (disabled) return;
-					letterIdx = col;
-				}}
-			>
-				{#if letter}
-					<span class="letter" transition:scale={{ duration: 250 }}>{letter}</span>
-				{/if}
-			</div>
+				<div
+					class={cell({ state: getCellState(row, col, $tries, letterIdx) })}
+					style:animation-delay={`${col * 0.25}s`}
+					on:click={() => {
+						letterIdx = col;
+					}}
+				>
+					{#if letter}
+						<span class="letter" transition:scale|local={{ duration: 250 }}>{letter}</span>
+					{/if}
+				</div>
+			{/each}
 		{/each}
-	{/each}
+	</div>
+	<button on:click={tries.reset}>Reset</button>
 </div>
 
 <style>
+	@keyframes scale {
+		from {
+			opacity: 0;
+			transform: scale(0.5);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+
+	@keyframes flip {
+		0% {
+			background-color: transparent;
+			border-color: var(--border-color);
+			transform: rotateY(0deg);
+		}
+		50% {
+			transform: rotateY(90deg);
+			border-color: transparent;
+			background-color: transparent;
+		}
+		100% {
+			transform: rotateY(0deg);
+			border-color: transparent;
+			background-color: var(--flip-bg-color);
+		}
+	}
+
 	.grid {
 		display: grid;
 		grid-template-columns: repeat(var(--cols), 1fr);
-		gap: 1rem 0.5rem;
+		gap: 0.5rem;
+
+		animation: scale 1s ease 0.25s;
+		animation-fill-mode: backwards;
 	}
 
 	.cell {
 		display: grid;
 		place-items: center;
 
-		border: 1px solid var(--palette-grey-40);
-		border-radius: var(--radii-sm);
+		cursor: pointer;
+
+		--border-color: var(--palette-grey-20);
+		border: 2px solid var(--border-color);
+		border-radius: var(--radii-md);
 
 		--size: 5rem;
 		width: var(--size);
@@ -106,11 +186,41 @@
 		font-size: 2rem;
 	}
 
-	.cell:not(.disabled) {
-		cursor: pointer;
+	.cell--selected {
+		border-bottom: 2px solid var(--palette-grey-70);
 	}
 
-	.cell.selected {
-		border-bottom: 2px solid var(--palette-grey-70);
+	.cell--disabled {
+		pointer-events: none;
+	}
+
+	.cell--correct,
+	.cell--present,
+	.cell--absent {
+		animation: flip 0.75s ease;
+		animation-fill-mode: backwards;
+		background-color: var(--flip-bg-color);
+		border-color: transparent;
+	}
+
+	.cell--correct {
+		--flip-bg-color: hsla(var(--palette-green-50-hsl), 0.5);
+	}
+
+	.cell--present {
+		--flip-bg-color: hsla(var(--palette-yellow-50-hsl), 0.5);
+	}
+
+	.cell--absent {
+		--flip-bg-color: hsla(var(--palette-grey-20-hsl), 0.75);
+	}
+
+	button {
+		display: block;
+		margin: 1rem auto;
+		text-align: center;
+		background-color: var(--palette-grey-20);
+		padding: 1rem;
+		cursor: pointer;
 	}
 </style>
