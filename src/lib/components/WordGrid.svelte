@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { isDevelopment } from '$lib/constants';
 	import { cmdMenuOpen } from '$lib/store/cmdMenu';
 	import { keyDispatcher } from '$lib/store/keyDispatcher';
 	import { dailyWord, tries } from '$lib/store/tries';
@@ -16,6 +15,7 @@
 
 	// State
 	let letterIdx = 0;
+
 	$: isFull = $tries[$tries.length - 1].filter(isLetter).length === wordSize;
 
 	// Lifecycle
@@ -139,9 +139,6 @@
 			{/each}
 		{/each}
 	</div>
-	{#if isDevelopment}
-		<button on:click={tries.reset}>Reset</button>
-	{/if}
 </div>
 
 <style>
@@ -229,15 +226,6 @@
 
 	.cell--absent {
 		--flip-bg-color: hsla(var(--palette-grey-20-hsl), 0.75);
-	}
-
-	button {
-		display: block;
-		margin: 1rem auto;
-		text-align: center;
-		background-color: var(--palette-grey-20);
-		padding: 1rem;
-		cursor: pointer;
 	}
 
 	@media (min-width: 768px) {
