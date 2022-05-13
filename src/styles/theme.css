@@ -15,9 +15,9 @@
 	/* ------ */
 
 	/* Radius */
-	--radii-sm: 5%;
-	--radii-md: 10%;
-	--radii-lg: 20%;
+	--radii-sm: 0.25rem;
+	--radii-md: 0.5rem;
+	--radii-lg: 1rem;
 	--radii-full: 9999px;
 	--radii-full: 9999px;
 
@@ -28,7 +28,7 @@
 	/* Transitions */
 	/* ----------- */
 	--motion: 0.3s cubic-bezier(0.2, 1, 0.2, 1);
-	--smooth: 0.4s cubic-bezier(0.9, 0, 0.05, 1);
+	--motion-slow: 0.5s cubic-bezier(0.2, 1, 0.2, 1);
 	--appearance: 0.2s ease;
 
 	/* ------- */

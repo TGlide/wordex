@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
 	import { browser } from '$app/env';
+	import EndgameModal from '$lib/components/EndgameModal.svelte';
 	import Keyboard from '$lib/components/Keyboard.svelte';
 	import WordGrid from '$lib/components/WordGrid/index.svelte';
 	import { supabase } from '$lib/constants';
@@ -91,6 +92,7 @@
 	<h1 on:click={onLogoClick}>Wordex</h1>
 	<WordGrid />
 	<Keyboard />
+	<EndgameModal />
 </section>
 
 <style>

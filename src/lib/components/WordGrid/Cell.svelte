@@ -62,7 +62,7 @@
 
 		--border-color: var(--palette-grey-20);
 		border: 0.025em solid var(--border-color);
-		border-radius: var(--radii-md);
+		border-radius: 10%;
 
 		--size: 1em;
 		width: var(--size);
