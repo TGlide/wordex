@@ -1,4 +1,5 @@
 <script lang="ts" context="module">
+	import { ROW_FLIP_DURATION } from '$lib/constants';
 	import { cva, type VariantProps } from 'class-variance-authority';
 	import { scale } from 'svelte/transition';
 
@@ -24,7 +25,11 @@
 	export let col: number;
 </script>
 
-<div class={cell({ state, disabled })} style:animation-delay={`${col * 0.25}s`} on:click>
+<div
+	class={cell({ state, disabled })}
+	style:animation-delay={`${col * ROW_FLIP_DURATION}ms`}
+	on:click
+>
 	{#if letter}
 		<span class="letter" transition:scale|local={{ duration: 250 }}>{letter}</span>
 	{/if}

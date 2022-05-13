@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cmdMenuOpen } from '$lib/store/cmdMenu';
+	import { store } from '$lib/store';
 	import { scale } from 'svelte/transition';
 	import { switchTheme } from '../utils/theme';
 
@@ -17,12 +17,16 @@
 
 	let query: string = '';
 	let selected: number = 0;
+	let visible = false;
 
 	$: results = actions.filter(({ label }) => label.toLowerCase().includes(query.toLowerCase()));
 	$: {
 		// Reset selected index when the results size changes
 		results.length;
 		selected = 0;
+	}
+	$: {
+		$store.disabled = visible;
 	}
 
 	const trigger = (idx: number) => {
@@ -33,14 +37,14 @@
 	const onKeyDown = (event: KeyboardEvent) => {
 		//  if cmd+k is pressed, toggle visible
 		if (event.metaKey && event.key === 'k') {
-			$cmdMenuOpen = !$cmdMenuOpen;
+			visible = !visible;
 			event.preventDefault();
 		}
 
-		if (!$cmdMenuOpen) return;
+		if (!visible) return;
 
 		if (event.key === 'Escape') {
-			$cmdMenuOpen = false;
+			visible = false;
 		}
 
 		if (event.key === 'ArrowDown') {
@@ -59,7 +63,7 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-{#if $cmdMenuOpen}
+{#if visible}
 	<div
 		class="wrapper themed"
 		class:empty={results.length === 0}
