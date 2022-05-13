@@ -21,12 +21,14 @@ const createStore = () => {
 	};
 
 	const setDailyWord = (word: string) => {
-		resetTries();
-
-		store.update((prev) => ({
-			...prev,
-			dailyWord: word
-		}));
+		store.update((prev) => {
+			console.log(prev);
+			return {
+				...prev,
+				tries: prev.dailyWord === word ? prev.tries : [[]],
+				dailyWord: word
+			};
+		});
 	};
 
 	return {
