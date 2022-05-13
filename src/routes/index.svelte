@@ -1,4 +1,5 @@
 <script lang="ts" context="module">
+	import { browser } from '$app/env';
 	import Keyboard from '$lib/components/Keyboard.svelte';
 	import WordGrid from '$lib/components/WordGrid/index.svelte';
 	import { supabase } from '$lib/constants';
@@ -9,12 +10,16 @@
 	import { onMount } from 'svelte';
 
 	export const load: Load = async ({ fetch }) => {
-		return {
-			status: 200,
-			props: {
-				dailyWord: 'cucks'
-			}
-		};
+		if (!browser) {
+			// Loading the dictionary from the server is too costly, and vercel explodes
+			return {
+				status: 200,
+				props: {
+					dailyWord: 'cucks',
+					wordList: []
+				}
+			};
+		}
 
 		const res = await fetch('words/ptBr.txt');
 		const text = await res.text();
@@ -45,7 +50,8 @@
 			return {
 				status: 200,
 				props: {
-					dailyWord
+					dailyWord,
+					wordList: words
 				}
 			};
 		}
@@ -53,7 +59,8 @@
 		return {
 			status: 200,
 			props: {
-				dailyWord: data[0].word
+				dailyWord: data[0].word,
+				wordList: words
 			}
 		};
 	};
@@ -61,13 +68,10 @@
 
 <script lang="ts">
 	export let dailyWord: string;
+	export let wordList: string[];
 
 	onMount(async () => {
 		store.setDailyWord(dailyWord);
-
-		const res = await fetch('words/ptBr.txt');
-		const text = await res.text();
-		const wordList = text.split('\n');
 		$wordStore = wordList;
 	});
 
