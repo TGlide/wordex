@@ -71,6 +71,7 @@
 	export let wordList: string[];
 
 	onMount(async () => {
+		store.checkVersion();
 		store.setDailyWord(dailyWord);
 		$wordStore = wordList;
 	});

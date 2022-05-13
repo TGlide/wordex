@@ -1,4 +1,4 @@
-import { ROW_FLIP_DURATION } from '$lib/constants';
+import { projectVersion, ROW_FLIP_DURATION } from '$lib/constants';
 import { decrement, increment } from '$lib/utils/number';
 import { getCorrectWord, isLetter, normalizeString } from '$lib/utils/string';
 import { get } from 'svelte/store';
@@ -21,6 +21,7 @@ type Store = {
 	maxTries: number;
 	letterIdx: number;
 	disabled: boolean;
+	version: string;
 };
 
 const isFull = (word: Word, wordSize: number) => {
@@ -103,18 +104,27 @@ const onTypeLetter = (prev: Store, letter: string) => {
 };
 
 const createStore = () => {
+	const defaultValue = {
+		tries: [[]],
+		dailyWord: '',
+		gameState: GameState.PLAYING,
+		wordSize: 5,
+		maxTries: 6,
+		letterIdx: 0,
+		disabled: false,
+		version: '0.0.0'
+	};
+
 	const store = localStorageWritable<Store>('store', {
-		defaultValue: {
-			tries: [[]],
-			dailyWord: '',
-			gameState: GameState.PLAYING,
-			wordSize: 5,
-			maxTries: 6,
-			letterIdx: 0,
-			disabled: false
-		},
+		defaultValue,
 		excludedKeys: ['disabled']
 	});
+
+	const checkVersion = () => {
+		if (get(store).version !== projectVersion) {
+			store.set({ ...defaultValue, version: projectVersion });
+		}
+	};
 
 	const resetTries = () => {
 		store.update((prev) => ({
@@ -177,7 +187,8 @@ const createStore = () => {
 		...store,
 		resetTries,
 		setDailyWord,
-		onKeyDown
+		onKeyDown,
+		checkVersion
 	};
 };
 
