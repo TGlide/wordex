@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 
 export const isDevelopment = import.meta.env.DEV;
-export const projectVersion = import.meta.env.VITE_PROJECT_VERSION;
+export const projectVersion = '0.0.4';
 export const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 export const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 

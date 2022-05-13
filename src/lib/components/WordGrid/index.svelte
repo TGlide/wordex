@@ -3,14 +3,10 @@
 	import { keyDispatcher } from '$lib/store/keyDispatcher';
 	import { range } from '$lib/utils/array';
 	import { getRowStates } from '$lib/utils/state';
-	import { getLetters, normalizeString } from '$lib/utils/string';
 	import { onMount } from 'svelte';
 	import Cell from './Cell.svelte';
 
 	// State
-	$: normalizedDailyWord = normalizeString($store.dailyWord);
-	$: dailyWordLetters = getLetters(normalizedDailyWord);
-
 	$: currentRow = $store.tries.length - 1;
 
 	// Lifecycle
@@ -27,7 +23,6 @@
 	// Methods
 	$: getRowCellsState = (row: number) => {
 		const state = getRowStates($store, row);
-		console.log(state);
 		return state;
 	};
 </script>

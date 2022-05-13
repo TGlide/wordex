@@ -44,7 +44,7 @@
 		border-radius: var(--radii-md);
 		padding: 1rem;
 
-		width: clamp(50vw, 300px, 100%);
+		width: clamp(300px, 50vw, 500px);
 
 		opacity: 0;
 		transform: scale(0);

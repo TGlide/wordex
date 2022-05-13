@@ -37,7 +37,7 @@ const addTry = (prev: Store) => {
 
 	if (normalizeString(prev.dailyWord) === normalizeString(correctWord)) {
 		gameState = GameState.WON;
-	} else if (currentRow === prev.maxTries) {
+	} else if (currentRow >= prev.maxTries - 1) {
 		gameState = GameState.LOST;
 	}
 

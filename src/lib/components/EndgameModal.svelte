@@ -41,7 +41,7 @@
 		align-items: center;
 
 		text-align: center;
-		min-height: 300px;
+		min-height: 400px;
 
 		user-select: none;
 	}
