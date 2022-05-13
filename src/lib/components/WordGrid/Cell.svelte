@@ -61,20 +61,19 @@
 		cursor: pointer;
 
 		--border-color: var(--palette-grey-20);
-		border: 2px solid var(--border-color);
+		border: 0.025em solid var(--border-color);
 		border-radius: var(--radii-md);
 
-		--size: 3rem;
+		--size: 1em;
 		width: var(--size);
 		height: var(--size);
 
 		text-transform: uppercase;
 		font-weight: 800;
-		font-size: 1.25rem;
 	}
 
 	.cell--selected {
-		border-bottom: 2px solid var(--palette-grey-70);
+		border-bottom-color: var(--palette-grey-70);
 	}
 
 	.cell--disabled {
@@ -102,10 +101,7 @@
 		--flip-bg-color: hsla(var(--palette-grey-20-hsl), 0.75);
 	}
 
-	@media (min-width: 768px) {
-		.cell {
-			--size: 5rem;
-			font-size: 2rem;
-		}
+	.letter {
+		font-size: 0.5em;
 	}
 </style>

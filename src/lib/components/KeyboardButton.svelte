@@ -3,6 +3,7 @@
 
 	export let key: string;
 	export let keyCodes: string[] | undefined = undefined;
+	export let gridColumn: string = 'span 3';
 
 	let pressed = false;
 
@@ -29,7 +30,7 @@
 
 <svelte:window on:keydown={(e) => onKey(e, 'down')} on:keyup={(e) => onKey(e, 'up')} />
 
-<button class:pressed class:enter={key === 'enter'} on:click={onClick}>
+<button class:pressed on:click={onClick} style:grid-column={gridColumn}>
 	<span>
 		{key}
 	</span>
@@ -47,10 +48,10 @@
 
 		background-color: var(--palette-grey-20);
 		border-radius: var(--radii-sm);
-		font-size: 1rem;
+		font-size: clamp(0.5rem, 4vw, 1.25rem);
 
-		width: 2rem;
-		height: min(10vh, 4rem);
+		width: 100%;
+		height: 100%;
 		transition: transform var(--motion), opacity var(--appearance);
 	}
 
@@ -60,21 +61,5 @@
 
 	:is(button:active, button.pressed) span {
 		transform: translateY(0.25rem);
-	}
-
-	button.enter span {
-		width: 4rem;
-	}
-
-	@media (min-width: 768px) {
-		span {
-			font-size: 1.25rem;
-			width: 4rem;
-			height: 4rem;
-		}
-
-		button.enter span {
-			width: 10rem;
-		}
 	}
 </style>

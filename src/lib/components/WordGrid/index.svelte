@@ -63,7 +63,7 @@
 
 <svelte:window on:keydown={store.onKeyDown} />
 
-<div class="grid" style:--cols={$store.wordSize}>
+<div class="grid" style:--rows={$store.maxTries} style:--cols={$store.wordSize}>
 	{#each range(0, $store.maxTries) as row}
 		{@const cellsState = getRowCellsState(row)}
 
@@ -98,7 +98,10 @@
 	.grid {
 		display: grid;
 		grid-template-columns: repeat(var(--cols), 1fr);
-		gap: 0.5rem;
+		grid-template-rows: repeat(var(--rows), 1fr);
+
+		font-size: clamp(1rem, 15vw, 5rem);
+		gap: 0.15em;
 
 		animation: scale 1s ease 0.25s;
 		animation-fill-mode: backwards;
