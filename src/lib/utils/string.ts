@@ -1,4 +1,4 @@
-export function isLetter(str: string | unknown): boolean {
+export function isLetter(str: string | unknown): str is string {
 	if (typeof str !== 'string') return false;
 	return str.length === 1 && /[a-z]/i.test(str);
 }
@@ -17,4 +17,26 @@ export const stringToHash = (text: string): number => {
 
 export const normalizeString = (str: string): string => {
 	return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+};
+
+export const countOccurrences = (str: string, substr: string): number => {
+	let count = 0;
+	let pos = 0;
+
+	while ((pos = str.indexOf(substr, pos)) > -1) {
+		count++;
+		pos += substr.length;
+	}
+
+	return count;
+};
+
+export const getLetters = (str: string): Record<string, number> => {
+	const letters: Record<string, number> = {};
+
+	for (const char of str) {
+		letters[char] = letters[char] ? letters[char] + 1 : 1;
+	}
+
+	return letters;
 };

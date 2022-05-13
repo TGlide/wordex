@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
 	import Keyboard from '$lib/components/Keyboard.svelte';
-	import WordGrid from '$lib/components/WordGrid.svelte';
+	import WordGrid from '$lib/components/WordGrid/index.svelte';
 	import { supabase } from '$lib/constants';
 	import { store } from '$lib/store';
 	import { randomPick } from '$lib/utils/array';
@@ -58,7 +58,7 @@
 	const onLogoClick = () => {
 		timesClicked++;
 
-		if (timesClicked >= 10) {
+		if (timesClicked >= 5) {
 			store.resetTries();
 			timesClicked = 0;
 		}
