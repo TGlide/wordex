@@ -13,7 +13,7 @@
 	export let variant: ButtonProps['variant'] = 'primary';
 </script>
 
-<button class={button({ variant })}>
+<button class={button({ variant })} on:click>
 	<slot />
 </button>
 

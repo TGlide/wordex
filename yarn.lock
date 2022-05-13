@@ -1022,6 +1022,11 @@ class-variance-authority@^0.2.1:
   resolved "https://registry.yarnpkg.com/class-variance-authority/-/class-variance-authority-0.2.1.tgz#4c0b857456056e842e2bb0e63620a2a554ed0575"
   integrity sha512-1saIFSnCyvtc/piraDhejwrPRd2P6btFaDSMy3/UwoitCX3tBcpJt4+hGuK82FoojN+qEkGgGgexfZpNWMrD5w==
 
+clipboard-copy@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/clipboard-copy/-/clipboard-copy-4.0.1.tgz#326ef9726d4ffe72d9a82a7bbe19379de692017d"
+  integrity sha512-wOlqdqziE/NNTUJsfSgXmBMIrYmfd5V0HCGsR8uAKHcg+h9NENWINcfRjtWGU77wDHC8B8ijV4hMTGYbrKovng==
+
 color-convert@^1.9.0:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.3.tgz#bb71850690e1f136567de629d2d5471deda4c1e8"

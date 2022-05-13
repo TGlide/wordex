@@ -1,19 +1,13 @@
 import { projectVersion, ROW_FLIP_DURATION } from '$lib/constants';
+import type { Word } from '$lib/types';
+import { GameState } from '$lib/types';
 import { decrement, increment } from '$lib/utils/number';
 import { getCorrectWord, isLetter, normalizeString } from '$lib/utils/string';
 import { get } from 'svelte/store';
 import { localStorageWritable } from './localStorageWritable';
 import { wordStore } from './words';
 
-type Word = Array<string | null>;
-
-export enum GameState {
-	PLAYING,
-	WON,
-	LOST
-}
-
-type Store = {
+export type Store = {
 	tries: Array<Word>;
 	dailyWord: string;
 	gameState: GameState;

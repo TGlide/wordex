@@ -1,15 +1,18 @@
 <script lang="ts" context="module">
 	import { ROW_FLIP_DURATION } from '$lib/constants';
+	import { CellState } from '$lib/types';
 	import { cva, type VariantProps } from 'class-variance-authority';
 	import { scale } from 'svelte/transition';
 
 	const cell = cva('cell', {
 		variants: {
 			state: {
-				correct: 'cell--correct',
-				present: 'cell--present',
-				absent: 'cell--absent',
-				selected: 'cell--selected'
+				[CellState.CORRECT]: 'cell--correct',
+				[CellState.PRESENT]: 'cell--present',
+				[CellState.ABSENT]: 'cell--absent'
+			},
+			selected: {
+				true: 'cell--selected'
 			},
 			disabled: { true: 'cell--disabled' }
 		}
@@ -21,12 +24,13 @@
 <script lang="ts">
 	export let state: CellProps['state'];
 	export let disabled: CellProps['disabled'];
+	export let selected: CellProps['selected'];
 	export let letter: string | null;
 	export let col: number;
 </script>
 
 <div
-	class={cell({ state, disabled })}
+	class={cell({ state, disabled, selected })}
 	style:animation-delay={`${col * ROW_FLIP_DURATION}ms`}
 	on:click
 >
@@ -72,7 +76,7 @@
 		font-weight: 800;
 	}
 
-	.cell--selected {
+	.cell--selected:not(.cell--disabled) {
 		border-bottom-color: var(--palette-grey-70);
 	}
 

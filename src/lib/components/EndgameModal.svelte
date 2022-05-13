@@ -1,7 +1,10 @@
 <script lang="ts">
-	import { GameState, store } from '$lib/store';
+	import { store } from '$lib/store';
+	import { GameState } from '$lib/types';
 	import Button from '$lib/UI/Button.svelte';
 	import Modal from '$lib/UI/Modal.svelte';
+	import { getEndgameShareString } from '$lib/utils/state';
+	import copy from 'clipboard-copy';
 
 	$: visible = $store.gameState !== GameState.PLAYING && !$store.disabled;
 
@@ -14,6 +17,8 @@
 			timesClicked = 0;
 		}
 	};
+
+	$: shareString = getEndgameShareString($store);
 </script>
 
 <Modal {visible}>
@@ -24,7 +29,7 @@
 			<h3>{$store.tries.length - 1}/{$store.maxTries}</h3>
 			<h4>tries</h4>
 		</div>
-		<Button>Share</Button>
+		<Button on:click={() => copy(shareString)}>Share</Button>
 	</div>
 </Modal>
 

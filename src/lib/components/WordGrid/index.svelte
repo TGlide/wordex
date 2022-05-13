@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { GameState, store } from '$lib/store';
+	import { store } from '$lib/store';
 	import { keyDispatcher } from '$lib/store/keyDispatcher';
 	import { range } from '$lib/utils/array';
-	import { getLetters, isLetter, normalizeString } from '$lib/utils/string';
+	import { getRowStates } from '$lib/utils/state';
+	import { getLetters, normalizeString } from '$lib/utils/string';
 	import { onMount } from 'svelte';
-	import type { CellProps } from './Cell.svelte';
 	import Cell from './Cell.svelte';
 
 	// State
@@ -25,40 +25,7 @@
 	});
 
 	// Methods
-	$: getRowCellsState = (row: number): Array<CellProps['state']> => {
-		const result: Array<CellProps['state']> = range(0, $store.wordSize).map(() => undefined);
-
-		if (row === currentRow) {
-			result[$store.letterIdx] =
-				$store.gameState !== GameState.PLAYING || $store.disabled ? undefined : 'selected';
-			return result;
-		}
-
-		// Set correct and wrong letters
-		const rowTry = $store.tries[row];
-		const remainingLetters = { ...dailyWordLetters };
-		rowTry?.forEach((value, col) => {
-			if (normalizedDailyWord[col] === value) {
-				result[col] = 'correct';
-				remainingLetters[value]--;
-			} else if (!normalizedDailyWord.includes(value ?? '')) {
-				result[col] = 'absent';
-			}
-		});
-
-		// Set partial and other wrong letters
-		rowTry?.forEach((value, col) => {
-			if (result[col] || !isLetter(value)) return;
-			if (remainingLetters[value] > 0) {
-				result[col] = 'present';
-				remainingLetters[value]--;
-			} else {
-				result[col] = 'absent';
-			}
-		});
-
-		return result;
-	};
+	$: getRowCellsState = (row: number) => getRowStates($store, row);
 </script>
 
 <svelte:window on:keydown={store.onKeyDown} />
@@ -69,10 +36,12 @@
 
 		{#each range(0, $store.wordSize) as col}
 			{@const letter = $store.tries[row]?.[col]}
+			{@const selected = row === currentRow && $store.letterIdx === col}
 
 			<Cell
-				disabled={row !== currentRow}
+				disabled={row !== currentRow || $store.disabled}
 				state={cellsState[col]}
+				{selected}
 				{letter}
 				{col}
 				on:click={() => {
