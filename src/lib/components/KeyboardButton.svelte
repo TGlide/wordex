@@ -63,7 +63,7 @@
 	}
 
 	button.enter span {
-		width: 5rem;
+		width: 4rem;
 	}
 
 	@media (min-width: 768px) {
