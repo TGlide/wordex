@@ -6,6 +6,7 @@
 	import { wordStore } from '$lib/store/words';
 	import { randomPick } from '$lib/utils/array';
 	import type { Load } from '.svelte-kit/types/src/routes';
+	import { onMount } from 'svelte';
 
 	export const load: Load = async ({ fetch }) => {
 		const res = await fetch('words/ptBr.txt');
@@ -37,8 +38,7 @@
 			return {
 				status: 200,
 				props: {
-					dailyWord,
-					wordList: words
+					dailyWord
 				}
 			};
 		}
@@ -46,8 +46,7 @@
 		return {
 			status: 200,
 			props: {
-				dailyWord: data[0].word,
-				wordList: words
+				dailyWord: data[0].word
 			}
 		};
 	};
@@ -55,10 +54,15 @@
 
 <script lang="ts">
 	export let dailyWord: string;
-	export let wordList: string[];
 
-	$wordStore = wordList;
-	store.setDailyWord(dailyWord);
+	onMount(async () => {
+		store.setDailyWord(dailyWord);
+
+		const res = await fetch('words/ptBr.txt');
+		const text = await res.text();
+		const wordList = text.split('\n');
+		$wordStore = wordList;
+	});
 
 	let timesClicked = 0;
 	const onLogoClick = () => {
