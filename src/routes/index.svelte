@@ -9,16 +9,16 @@
 	import { onMount } from 'svelte';
 
 	export const load: Load = async ({ fetch }) => {
-		const res = await fetch('words/ptBr.txt');
-		const text = await res.text();
-		const words = text.split('\n');
-
 		return {
 			status: 200,
 			props: {
 				dailyWord: 'cucks'
 			}
 		};
+
+		const res = await fetch('words/ptBr.txt');
+		const text = await res.text();
+		const words = text.split('\n');
 
 		const { data, error } = await supabase
 			.from('daily_words')
