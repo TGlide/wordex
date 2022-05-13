@@ -1,5 +1,3 @@
-import { stringToHash } from './string';
-
 export const range = (start: number, end: number): number[] => {
 	const arr: number[] = [];
 	for (let i = start; i < end; i++) {
@@ -8,6 +6,6 @@ export const range = (start: number, end: number): number[] => {
 	return arr;
 };
 
-export const deterministicPick = <T>(arr: T[], str: string) => {
-	return arr[Math.abs(stringToHash(str)) % arr.length];
+export const randomPick = <T>(arr: T[]): T => {
+	return arr[Math.floor(Math.random() * arr.length)];
 };
