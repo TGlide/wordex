@@ -25,7 +25,11 @@
 	});
 
 	// Methods
-	$: getRowCellsState = (row: number) => getRowStates($store, row);
+	$: getRowCellsState = (row: number) => {
+		const state = getRowStates($store, row);
+		console.log(state);
+		return state;
+	};
 </script>
 
 <svelte:window on:keydown={store.onKeyDown} />

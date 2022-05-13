@@ -30,6 +30,7 @@ export const getRowStates = (store: Store, row: number): Array<CellState | undef
 	rowTry?.forEach((value, col) => {
 		if (result[col] || !isLetter(value)) return;
 		if (remainingLetters[value] > 0) {
+			console.log('hhh');
 			result[col] = CellState.PRESENT;
 			remainingLetters[value]--;
 		} else {
@@ -48,7 +49,7 @@ const cellStateEmojiMap = {
 
 export const getEndgameShareString = (store: Store): string => {
 	const storeState = range(0, store.tries.length - 1).map((row) => getRowStates(store, row));
-	let str = `Wordex ${store.tries.length - 1}/${store.tries.length}\n\n`;
+	let str = `Wordex ${store.tries.length - 1}/${store.maxTries}\n\n`;
 
 	storeState.forEach((row) => {
 		row.forEach((col) => {
