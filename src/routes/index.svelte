@@ -13,6 +13,13 @@
 		const text = await res.text();
 		const words = text.split('\n');
 
+		return {
+			status: 200,
+			props: {
+				dailyWord: 'cucks'
+			}
+		};
+
 		const { data, error } = await supabase
 			.from('daily_words')
 			.select('word')
