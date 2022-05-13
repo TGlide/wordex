@@ -23,6 +23,10 @@ type Store = {
 	disabled: boolean;
 };
 
+const isFull = (word: Word, wordSize: number) => {
+	return word.filter(isLetter).length === wordSize;
+};
+
 // Utils
 const addTry = (prev: Store) => {
 	const words = get(wordStore);
@@ -88,8 +92,7 @@ const onTypeLetter = (prev: Store, letter: string) => {
 	const tries = prev.tries;
 	tries[currentRow][prev.letterIdx] = letter;
 
-	const isCurrentRowFull = tries[currentRow].filter(isLetter).length === prev.wordSize;
-	if (!isCurrentRowFull) {
+	if (!isFull(tries[currentRow], prev.wordSize)) {
 		letterIdx = increment(prev.letterIdx, prev.wordSize - 1);
 	}
 	return {
@@ -151,13 +154,15 @@ const createStore = () => {
 			}
 
 			const currentRow = prev.tries.length - 1;
-			const isFull = prev.tries[currentRow].length === prev.wordSize;
 
 			if (event.key === 'ArrowLeft') {
 				return decrementLetterIdx(prev);
 			} else if (event.key === 'ArrowRight') {
 				return incrementLetterIdx(prev);
-			} else if (event.key.toLowerCase() === 'enter' && isFull) {
+			} else if (
+				event.key.toLowerCase() === 'enter' &&
+				isFull(prev.tries[currentRow], prev.wordSize)
+			) {
 				return onEnterRow(prev);
 			} else if (['Backspace', 'Delete'].includes(event.code)) {
 				return onDelete(prev);

@@ -3,6 +3,10 @@
 	import '../styles/index.css';
 </script>
 
+<svelte:head>
+	<title>Wordex</title>
+</svelte:head>
+
 <main>
 	<CommandMenu />
 	<slot />

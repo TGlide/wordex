@@ -15,7 +15,7 @@
 			return {
 				status: 200,
 				props: {
-					dailyWord: 'cucks',
+					dailyWord: 'words',
 					wordList: []
 				}
 			};
