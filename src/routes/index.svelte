@@ -99,18 +99,22 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: space-between;
-		height: 90vh;
+		height: 100%;
 	}
 
 	h1 {
 		font-family: var(--ff-display);
-		font-size: 3rem;
+		font-size: 2rem;
 		text-align: center;
 		font-weight: 600;
 		user-select: none;
 	}
 
 	@media (min-width: 768px) {
+		h1 {
+			font-size: 3rem;
+		}
+
 		section {
 			height: 100vh;
 		}

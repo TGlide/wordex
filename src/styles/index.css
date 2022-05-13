@@ -6,9 +6,14 @@
 /* Styles */
 /* ------ */
 
+html {
+	height: 100%;
+}
+
 body {
-	min-height: 100vh;
+	height: calc(100% - var(--inset));
 	background-color: var(--bg);
 	color: var(--primary);
 	margin: 0;
+	margin-top: var(--inset);
 }

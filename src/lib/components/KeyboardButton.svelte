@@ -49,8 +49,8 @@
 		border-radius: var(--radii-sm);
 		font-size: 1rem;
 
-		width: 2.15rem;
-		height: 3.15rem;
+		width: 2rem;
+		height: min(10vh, 4rem);
 		transition: transform var(--motion), opacity var(--appearance);
 	}
 

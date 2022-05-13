@@ -21,6 +21,9 @@
 	--radii-full: 9999px;
 	--radii-full: 9999px;
 
+	/* Other */
+	--inset: env(safe-area-inset-top);
+
 	/* ----------- */
 	/* Transitions */
 	/* ----------- */
