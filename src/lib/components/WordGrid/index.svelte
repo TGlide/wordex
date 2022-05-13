@@ -45,7 +45,7 @@
 		letterIdx = Math.min(letterIdx + 1, wordSize - 1);
 	};
 
-	const onKeyDown = (event: Pick<KeyboardEvent, 'metaKey' | 'key' | 'code'>) => {
+	const onKeyDown = async (event: Pick<KeyboardEvent, 'metaKey' | 'key' | 'code'>) => {
 		if (!!event.metaKey || $cmdMenuOpen || $store.tries.length === maxTries + 1 || hasWon) return;
 
 		let currentWord = $store.tries[$store.tries.length - 1];
@@ -57,7 +57,7 @@
 		}
 
 		if (event.key.toLowerCase() === 'enter' && isFull) {
-			$store.tries = [...$store.tries, ['']];
+			await store.addTry();
 			letterIdx = 0;
 			currentWord = [];
 		}

@@ -40,3 +40,11 @@ export const getLetters = (str: string): Record<string, number> => {
 
 	return letters;
 };
+
+export const getCorrectWord = (words: Array<string>, word: string) => {
+	const correctWord = words.find(
+		(w) => normalizeString(w).toLowerCase() === normalizeString(word).toLowerCase()
+	);
+
+	return correctWord ?? word;
+};

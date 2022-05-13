@@ -1,4 +1,7 @@
+import { getCorrectWord } from '$lib/utils/string';
+import { get } from 'svelte/store';
 import { localStorageWritable } from './localStorageWritable';
+import { wordStore } from './words';
 
 type Word = Array<string | null>;
 
@@ -12,6 +15,21 @@ const createStore = () => {
 		tries: [[]],
 		dailyWord: ''
 	});
+
+	const addTry = async () => {
+		const words = get(wordStore);
+
+		store.update((prev) => {
+			const currentIdx = prev.tries.length - 1;
+			const currentTry = prev.tries[currentIdx];
+			const correctWord = getCorrectWord(words, currentTry.join(''));
+
+			return {
+				...prev,
+				tries: [...prev.tries.slice(0, currentIdx), correctWord.split(''), []]
+			};
+		});
+	};
 
 	const resetTries = () => {
 		store.update((prev) => ({
@@ -34,7 +52,8 @@ const createStore = () => {
 	return {
 		...store,
 		resetTries,
-		setDailyWord
+		setDailyWord,
+		addTry
 	};
 };
 
