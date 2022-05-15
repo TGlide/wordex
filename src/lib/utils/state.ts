@@ -1,6 +1,7 @@
 import type { Store } from '$lib/store';
-import { CellState } from '$lib/types';
+import { CellState, KeyState } from '$lib/types';
 import { range } from './array';
+import { objectEntries } from './object';
 import { getLetters, isLetter, normalizeString } from './string';
 
 export const getRowStates = (store: Store, row: number): Array<CellState | undefined> => {
@@ -30,11 +31,65 @@ export const getRowStates = (store: Store, row: number): Array<CellState | undef
 	rowTry?.forEach((value, col) => {
 		if (result[col] || !isLetter(value)) return;
 		if (remainingLetters[value] > 0) {
-			console.log('hhh');
 			result[col] = CellState.PRESENT;
 			remainingLetters[value]--;
 		} else {
 			result[col] = CellState.ABSENT;
+		}
+	});
+
+	return result;
+};
+
+export const getStoreState = (store: Store) => {
+	return range(0, store.tries.length - 1).map((row) => getRowStates(store, row));
+};
+
+export const getKeyStates = (store: Store): Record<string, KeyState> => {
+	const result: Record<string, KeyState> = {};
+
+	const storeState = getStoreState(store);
+	const maxCellStateMap: Record<string, Record<CellState, number>> = {};
+	const perceivedLetterPresence: Record<string, number> = {};
+
+	storeState.forEach((row, rowIdx) => {
+		const cellStateMap: Record<string, Record<CellState, number>> = {};
+
+		row.forEach((cellState, col) => {
+			const letter = normalizeString(store.tries[rowIdx][col] ?? '');
+			if (!cellState || !letter) return;
+
+			cellStateMap[letter] = {
+				correct: (cellStateMap[letter]?.correct ?? 0) + (cellState === CellState.CORRECT ? 1 : 0),
+				absent: (cellStateMap[letter]?.absent ?? 0) + (cellState === CellState.ABSENT ? 1 : 0),
+				present: (cellStateMap[letter]?.present ?? 0) + (cellState === CellState.PRESENT ? 1 : 0)
+			};
+		});
+
+		objectEntries(cellStateMap).forEach(([letter, cellStates]) => {
+			maxCellStateMap[letter] = {
+				correct: Math.max(maxCellStateMap[letter]?.correct ?? 0, cellStates.correct),
+				absent: Math.max(maxCellStateMap[letter]?.absent ?? 0, cellStates.absent),
+				present: Math.max(maxCellStateMap[letter]?.present ?? 0, cellStates.present)
+			};
+
+			perceivedLetterPresence[letter] = Math.max(
+				perceivedLetterPresence[letter] ?? 0,
+				cellStates.correct + cellStates.present
+			);
+		});
+	});
+
+	objectEntries(maxCellStateMap).forEach(([letter, cellStateMap]) => {
+		if (cellStateMap.correct > 0) {
+			result[letter] =
+				cellStateMap.correct >= perceivedLetterPresence[letter]
+					? KeyState.CORRECT
+					: KeyState.PARTIAL;
+		} else if (cellStateMap.present > 0) {
+			result[letter] = KeyState.PRESENT;
+		} else if (cellStateMap.absent > 0) {
+			result[letter] = KeyState.ABSENT;
 		}
 	});
 
@@ -48,7 +103,7 @@ const cellStateEmojiMap = {
 };
 
 export const getEndgameShareString = (store: Store): string => {
-	const storeState = range(0, store.tries.length - 1).map((row) => getRowStates(store, row));
+	const storeState = getStoreState(store);
 	let str = `Wordex ${store.tries.length - 1}/${store.maxTries}\n\n`;
 
 	storeState.forEach((row) => {

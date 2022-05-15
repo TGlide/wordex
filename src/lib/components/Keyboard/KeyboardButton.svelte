@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { keyDispatcher } from '$lib/dispatchers/keyDispatcher';
+	import { KeyState } from '$lib/types';
+	import { cva, type VariantProps } from 'class-variance-authority';
 
 	export let key: string;
 	export let keyCodes: string[] | undefined = undefined;
@@ -26,18 +28,34 @@
 			keyDispatcher.dispatch(key);
 		}
 	};
+
+	const keyboardBtn = cva('keyboard-btn', {
+		variants: {
+			variant: {
+				[KeyState.CORRECT]: 'keyboard-btn--correct',
+				[KeyState.PRESENT]: 'keyboard-btn--present',
+				[KeyState.PARTIAL]: 'keyboard-btn--partial',
+				[KeyState.ABSENT]: 'keyboard-btn--absent'
+			},
+			pressed: {
+				true: 'keyboard-btn--pressed'
+			}
+		}
+	});
+
+	export let variant: VariantProps<typeof keyboardBtn>['variant'] = undefined;
 </script>
 
 <svelte:window on:keydown={(e) => onKey(e, 'down')} on:keyup={(e) => onKey(e, 'up')} />
 
-<button class:pressed on:click={onClick} style:grid-column={gridColumn}>
+<button class={keyboardBtn({ variant, pressed })} on:click={onClick} style:grid-column={gridColumn}>
 	<span>
 		{key}
 	</span>
 </button>
 
 <style>
-	button {
+	.keyboard-btn {
 		cursor: pointer;
 		font-weight: 800;
 	}
@@ -55,11 +73,33 @@
 		transition: transform var(--motion), opacity var(--appearance);
 	}
 
-	button:hover span {
+	.keyboard-btn:hover span {
 		opacity: 0.9;
 	}
 
-	:is(button:active, button.pressed) span {
+	:is(.keyboard-btn:active, .keyboard-btn--pressed) span {
 		transform: translateY(0.25rem);
+	}
+
+	.keyboard-btn--correct span {
+		background-color: var(--correct);
+	}
+
+	.keyboard-btn--present span {
+		background-color: var(--present);
+	}
+
+	.keyboard-btn--partial span {
+		background: linear-gradient(
+			to right,
+			var(--present) 0%,
+			var(--present) 50%,
+			var(--correct) 50%,
+			var(--correct) 100%
+		);
+	}
+
+	.keyboard-btn--absent span {
+		opacity: 0.25;
 	}
 </style>

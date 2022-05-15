@@ -95,15 +95,15 @@
 	}
 
 	.cell--correct {
-		--flip-bg-color: hsla(var(--palette-green-50-hsl), 0.5);
+		--flip-bg-color: var(--correct);
 	}
 
 	.cell--present {
-		--flip-bg-color: hsla(var(--palette-yellow-50-hsl), 0.5);
+		--flip-bg-color: var(--present);
 	}
 
 	.cell--absent {
-		--flip-bg-color: hsla(var(--palette-grey-20-hsl), 0.75);
+		--flip-bg-color: var(--absent);
 	}
 
 	.letter {

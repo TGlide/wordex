@@ -213,6 +213,9 @@
 	--bg: hsl(var(--bg-hsl));
 	--primary-hsl: var(--palette-grey-10-hsl);
 	--primary: hsl(var(--primary-hsl));
+	--correct: hsla(var(--palette-green-50-hsl), 0.5);
+	--present: hsla(var(--palette-yellow-50-hsl), 0.5);
+	--absent: hsla(var(--palette-grey-20-hsl), 0.75);
 }
 
 [data-theme='dark'] {

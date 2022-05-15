@@ -11,3 +11,10 @@ export enum CellState {
 	ABSENT = 'absent',
 	CORRECT = 'correct'
 }
+
+export enum KeyState {
+	PRESENT = 'present',
+	ABSENT = 'absent',
+	PARTIAL = 'partial',
+	CORRECT = 'correct'
+}
