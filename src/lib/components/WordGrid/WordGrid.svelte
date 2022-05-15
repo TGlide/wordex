@@ -62,7 +62,7 @@
 		grid-template-columns: repeat(var(--cols), 1fr);
 		grid-template-rows: repeat(var(--rows), 1fr);
 
-		font-size: clamp(1rem, 15vw, 5rem);
+		font-size: clamp(1rem, 12.5vw, 5rem);
 		gap: 0.15em;
 
 		animation: scale 1s ease 0.25s;

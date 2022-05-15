@@ -44,7 +44,7 @@
 	@keyframes flip {
 		0% {
 			background-color: transparent;
-			border-color: var(--border-color);
+			border-color: var(--border);
 			transform: rotateY(0deg);
 		}
 		50% {
@@ -65,8 +65,7 @@
 
 		cursor: pointer;
 
-		--border-color: var(--palette-grey-20);
-		border: 0.025em solid var(--border-color);
+		border: 0.025em solid var(--border);
 		border-radius: 10%;
 
 		--size: 1em;

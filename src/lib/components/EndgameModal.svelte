@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { toastDispatcher } from '$lib/dispatchers/toastDispatcher';
 	import { store } from '$lib/store';
+	import { locale } from '$lib/store/locale';
 	import { GameState } from '$lib/types';
 	import Button from '$lib/UI/Button.svelte';
 	import Modal from '$lib/UI/Modal.svelte';
@@ -8,7 +9,7 @@
 	import copy from 'clipboard-copy';
 
 	$: visible = $store.gameState !== GameState.PLAYING && !$store.disabled;
-	$: shareString = getEndgameShareString($store.tries, $store.maxTries, $store.dailyWord);
+	$: shareString = getEndgameShareString($store.tries, $store.maxTries, $store.dailyWord, $locale);
 	$: {
 		(() => {
 			if (!visible) return;
