@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { store } from '$lib/store';
 	import { locale } from '$lib/store/locale';
-	import { isLocale, Locale } from '$lib/types';
+	import { isLocale, Locale, localeMap } from '$lib/types';
 
 	let timesClicked = 0;
 
@@ -29,8 +29,8 @@
 
 	<div class="select-wrapper">
 		<select value={$locale} on:change={onChange}>
-			<option value={Locale.PT}>🇵🇹 Pt</option>
-			<option value={Locale.EN}>🇬🇧 En</option>
+			<option value={Locale.PT}>{localeMap[Locale.PT]}</option>
+			<option value={Locale.EN}>{localeMap[Locale.EN]}</option>
 		</select>
 	</div>
 </header>
