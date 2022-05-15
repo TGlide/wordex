@@ -18,6 +18,10 @@
 		"target": "es2020",
 		"typeRoots": [
 			"@types"
-		]
-	}
+		],
+		"types": [
+			"@types/jest"
+		],
+		"isolatedModules": false,
+	},
 }
