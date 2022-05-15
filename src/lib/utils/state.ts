@@ -100,7 +100,7 @@ export const getEndgameShareString = (
 ): string => {
 	let str = `Wordex ${tries.length - 1}/${maxTries}\n\n`;
 
-	tries.forEach((word) => {
+	tries.slice(0, -1).forEach((word) => {
 		const cellStates = getCellStates(word, dailyWord);
 		cellStates.forEach((cellState) => {
 			str += cellStateEmojiMap[cellState ?? CellState.ABSENT] ?? '';
