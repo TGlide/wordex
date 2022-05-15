@@ -1,16 +1,21 @@
 <script lang="ts" context="module">
 	import { browser } from '$app/env';
 	import EndgameModal from '$lib/components/EndgameModal.svelte';
+	import Header from '$lib/components/Header.svelte';
 	import Keyboard from '$lib/components/Keyboard/Keyboard.svelte';
 	import WordGrid from '$lib/components/WordGrid/WordGrid.svelte';
 	import { supabase } from '$lib/constants';
 	import { store } from '$lib/store';
+	import { locale } from '$lib/store/locale';
 	import { wordStore } from '$lib/store/words';
 	import { randomPick } from '$lib/utils/array';
+	import { normalizeString } from '$lib/utils/string';
+	import { fetchWords } from '$lib/utils/words';
 	import type { Load } from '.svelte-kit/types/src/routes';
 	import { onMount } from 'svelte';
+	import { get } from 'svelte/store';
 
-	export const load: Load = async ({ fetch }) => {
+	export const load: Load = async () => {
 		if (!browser) {
 			// Loading the dictionary from the server is too costly, and vercel explodes
 			return {
@@ -22,27 +27,33 @@
 			};
 		}
 
-		const res = await fetch('words/ptBr.txt');
-		const text = await res.text();
-		const words = text.split('\n');
+		const storedLocale = get(locale);
+		const words = await fetchWords(storedLocale);
 
 		const { data, error } = await supabase
 			.from('daily_words')
 			.select('word')
-			.eq('created_at', new Date().toISOString().slice(0, 10));
-
+			.eq('created_at', new Date().toISOString().slice(0, 10))
+			.eq('lang', get(locale));
 		if (error) {
 			return { status: 400 };
 		}
 
 		if (!data || data.length === 0) {
-			const fiveLetterWords = words.filter((word) => word.length === 5);
+			const fiveLetterWords = words.reduce<string[]>((acc, curr) => {
+				const normalized = normalizeString(curr);
+				if (normalized.length === 5) {
+					return [...acc, normalized];
+				}
+				return acc;
+			}, []);
 
 			const dailyWord = randomPick(fiveLetterWords);
+			console.log(dailyWord, dailyWord.length, dailyWord.split(''));
 
 			const { error } = await supabase
 				.from('daily_words')
-				.insert({ word: dailyWord, created_at: new Date() });
+				.insert({ word: dailyWord, created_at: new Date(), lang: storedLocale });
 
 			if (error) {
 				return { status: 400 };
@@ -76,21 +87,10 @@
 		store.setDailyWord(dailyWord);
 		$wordStore = wordList;
 	});
-
-	let timesClicked = 0;
-
-	const onLogoClick = () => {
-		timesClicked++;
-
-		if (timesClicked >= 5) {
-			store.resetTries();
-			timesClicked = 0;
-		}
-	};
 </script>
 
 <section class="container themed">
-	<h1 on:click={onLogoClick}>Wordex</h1>
+	<Header />
 	<WordGrid />
 	<Keyboard />
 	<EndgameModal />
@@ -103,23 +103,5 @@
 		align-items: center;
 		justify-content: space-between;
 		height: 100%;
-	}
-
-	h1 {
-		font-family: var(--ff-display);
-		font-size: 2rem;
-		text-align: center;
-		font-weight: 600;
-		user-select: none;
-	}
-
-	@media (min-width: 768px) {
-		h1 {
-			font-size: 3rem;
-		}
-
-		section {
-			height: 100vh;
-		}
 	}
 </style>

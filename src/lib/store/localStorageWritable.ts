@@ -20,7 +20,11 @@ export function localStorageWritable<T>(key: string, config?: Config<T>) {
 
 	const localStorageSet: typeof store.set = (value) => {
 		if (browser) {
-			const filteredValue = objectFilter(value, (k) => !excludedKeys.includes(k as keyof T));
+			const filteredValue =
+				typeof value === 'object' && value !== null
+					? objectFilter(value, (v) => v !== undefined)
+					: value;
+
 			localStorage.setItem(key, JSON.stringify(filteredValue));
 		}
 	};
