@@ -5,6 +5,7 @@ import { getLetters, isLetter, normalizeString } from './string';
 
 export const getCellStates = (word: Word, dailyWord: string): Array<CellState | undefined> => {
 	const normalizedDailyWord = normalizeString(dailyWord);
+	const normalizedWord = normalizeString(word.join('')).split('');
 	const dailyWordLetters = getLetters(normalizedDailyWord);
 	const wordSize = dailyWord.length;
 
@@ -12,7 +13,7 @@ export const getCellStates = (word: Word, dailyWord: string): Array<CellState | 
 
 	// Set correct and wrong letters
 	const remainingLetters = { ...dailyWordLetters };
-	word?.forEach((value, col) => {
+	normalizedWord?.forEach((value, col) => {
 		if (normalizedDailyWord[col] === value) {
 			result[col] = CellState.CORRECT;
 			remainingLetters[value]--;
@@ -22,7 +23,7 @@ export const getCellStates = (word: Word, dailyWord: string): Array<CellState | 
 	});
 
 	// Set partial and other wrong letters
-	word?.forEach((value, col) => {
+	normalizedWord?.forEach((value, col) => {
 		if (result[col] || !isLetter(value)) return;
 		if (remainingLetters[value] > 0) {
 			result[col] = CellState.PRESENT;
