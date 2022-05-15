@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { keyDispatcher } from '$lib/store/keyDispatcher';
+	import { keyDispatcher } from '$lib/dispatchers/keyDispatcher';
 
 	export let key: string;
 	export let keyCodes: string[] | undefined = undefined;

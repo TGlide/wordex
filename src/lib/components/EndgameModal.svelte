@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { toastDispatcher } from '$lib/dispatchers/toastDispatcher';
 	import { store } from '$lib/store';
-	import { toastDispatcher } from '$lib/store/toastDispatcher';
 	import { GameState } from '$lib/types';
 	import Button from '$lib/UI/Button.svelte';
 	import Modal from '$lib/UI/Modal.svelte';

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { toastDispatcher, type Toast } from '$lib/store/toastDispatcher';
+	import { toastDispatcher, type Toast } from '$lib/dispatchers/toastDispatcher';
 	import { scale } from 'svelte/transition';
 
 	const DEFAULT_DURATION = 5000;

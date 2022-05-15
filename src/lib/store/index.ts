@@ -1,11 +1,11 @@
 import { projectVersion, ROW_FLIP_DELAY, ROW_FLIP_DURATION } from '$lib/constants';
+import { toastDispatcher } from '$lib/dispatchers/toastDispatcher';
 import type { Word } from '$lib/types';
 import { GameState } from '$lib/types';
 import { decrement, increment } from '$lib/utils/number';
 import { getCorrectWord, isLetter, normalizeString } from '$lib/utils/string';
 import { get } from 'svelte/store';
 import { localStorageWritable } from './localStorageWritable';
-import { toastDispatcher } from './toastDispatcher';
 import { wordStore } from './words';
 
 export type Store = {

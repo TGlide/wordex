@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { keyDispatcher } from '$lib/dispatchers/keyDispatcher';
 	import { store } from '$lib/store';
-	import { keyDispatcher } from '$lib/store/keyDispatcher';
 	import { range } from '$lib/utils/array';
 	import { getRowStates } from '$lib/utils/state';
 	import Cell from './Cell.svelte';
