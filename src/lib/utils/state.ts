@@ -1,24 +1,18 @@
-import type { Store } from '$lib/store';
-import { CellState, KeyState } from '$lib/types';
+import { CellState, KeyState, type Word } from '$lib/types';
 import { range } from './array';
 import { objectEntries } from './object';
 import { getLetters, isLetter, normalizeString } from './string';
 
-export const getRowStates = (store: Store, row: number): Array<CellState | undefined> => {
-	const currentRow = store.tries.length - 1;
-	const normalizedDailyWord = normalizeString(store.dailyWord);
+export const getCellStates = (word: Word, dailyWord: string): Array<CellState | undefined> => {
+	const normalizedDailyWord = normalizeString(dailyWord);
 	const dailyWordLetters = getLetters(normalizedDailyWord);
+	const wordSize = dailyWord.length;
 
-	const result: Array<CellState | undefined> = range(0, store.wordSize).map(() => undefined);
-
-	if (row >= currentRow) {
-		return result;
-	}
+	const result: Array<CellState | undefined> = range(0, wordSize).map(() => undefined);
 
 	// Set correct and wrong letters
-	const rowTry = store.tries[row];
 	const remainingLetters = { ...dailyWordLetters };
-	rowTry?.forEach((value, col) => {
+	word?.forEach((value, col) => {
 		if (normalizedDailyWord[col] === value) {
 			result[col] = CellState.CORRECT;
 			remainingLetters[value]--;
@@ -28,7 +22,7 @@ export const getRowStates = (store: Store, row: number): Array<CellState | undef
 	});
 
 	// Set partial and other wrong letters
-	rowTry?.forEach((value, col) => {
+	word?.forEach((value, col) => {
 		if (result[col] || !isLetter(value)) return;
 		if (remainingLetters[value] > 0) {
 			result[col] = CellState.PRESENT;
@@ -41,22 +35,18 @@ export const getRowStates = (store: Store, row: number): Array<CellState | undef
 	return result;
 };
 
-export const getStoreState = (store: Store) => {
-	return range(0, store.tries.length - 1).map((row) => getRowStates(store, row));
-};
-
-export const getKeyStates = (store: Store): Record<string, KeyState> => {
+export const getKeyStates = (tries: Word[], dailyWord: string): Record<string, KeyState> => {
 	const result: Record<string, KeyState> = {};
 
-	const storeState = getStoreState(store);
 	const maxCellStateMap: Record<string, Record<CellState, number>> = {};
 	const perceivedLetterPresence: Record<string, number> = {};
 
-	storeState.forEach((row, rowIdx) => {
+	tries.forEach((word, row) => {
+		const cellStates = getCellStates(word, dailyWord);
 		const cellStateMap: Record<string, Record<CellState, number>> = {};
 
-		row.forEach((cellState, col) => {
-			const letter = normalizeString(store.tries[rowIdx][col] ?? '');
+		cellStates.forEach((cellState, col) => {
+			const letter = normalizeString(tries[row][col] ?? '');
 			if (!cellState || !letter) return;
 
 			cellStateMap[letter] = {
@@ -102,13 +92,17 @@ const cellStateEmojiMap = {
 	[CellState.CORRECT]: '🟩'
 };
 
-export const getEndgameShareString = (store: Store): string => {
-	const storeState = getStoreState(store);
-	let str = `Wordex ${store.tries.length - 1}/${store.maxTries}\n\n`;
+export const getEndgameShareString = (
+	tries: Word[],
+	maxTries: number,
+	dailyWord: string
+): string => {
+	let str = `Wordex ${tries.length - 1}/${maxTries}\n\n`;
 
-	storeState.forEach((row) => {
-		row.forEach((col) => {
-			str += cellStateEmojiMap[col ?? CellState.ABSENT] ?? '';
+	tries.forEach((word) => {
+		const cellStates = getCellStates(word, dailyWord);
+		cellStates.forEach((cellState) => {
+			str += cellStateEmojiMap[cellState ?? CellState.ABSENT] ?? '';
 		});
 
 		str += '\n';

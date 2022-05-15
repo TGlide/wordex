@@ -8,7 +8,7 @@
 	import copy from 'clipboard-copy';
 
 	$: visible = $store.gameState !== GameState.PLAYING && !$store.disabled;
-	$: shareString = getEndgameShareString($store);
+	$: shareString = getEndgameShareString($store.tries, $store.maxTries, $store.dailyWord);
 	$: {
 		(() => {
 			if (!visible) return;

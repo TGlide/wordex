@@ -2,7 +2,7 @@
 	import { keyDispatcher } from '$lib/dispatchers/keyDispatcher';
 	import { store } from '$lib/store';
 	import { range } from '$lib/utils/array';
-	import { getRowStates } from '$lib/utils/state';
+	import { getCellStates } from '$lib/utils/state';
 	import Cell from './Cell.svelte';
 
 	// State
@@ -15,7 +15,8 @@
 
 	// Methods
 	$: getRowCellsState = (row: number) => {
-		const state = getRowStates($store, row);
+		if (row >= currentRow) return [];
+		const state = getCellStates($store.tries[row], $store.dailyWord);
 		return state;
 	};
 </script>

@@ -3,7 +3,7 @@
 	import { getKeyStates } from '$lib/utils/state';
 	import KeyboardButton from './KeyboardButton.svelte';
 
-	$: keyStates = getKeyStates($store);
+	$: keyStates = getKeyStates($store.tries, $store.dailyWord);
 </script>
 
 <div class="wrapper">
