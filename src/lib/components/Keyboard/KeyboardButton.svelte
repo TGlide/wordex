@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { keyDispatcher } from '$lib/dispatchers/keyDispatcher';
+	import { store } from '$lib/store';
 	import { KeyState } from '$lib/types';
 	import { cva, type VariantProps } from 'class-variance-authority';
 
@@ -44,11 +45,22 @@
 	});
 
 	export let variant: VariantProps<typeof keyboardBtn>['variant'] = undefined;
+	let delayedVariant = variant;
+
+	$: {
+		if (variant !== delayedVariant && !$store.disabled) {
+			delayedVariant = variant;
+		}
+	}
 </script>
 
 <svelte:window on:keydown={(e) => onKey(e, 'down')} on:keyup={(e) => onKey(e, 'up')} />
 
-<button class={keyboardBtn({ variant, pressed })} on:click={onClick} style:grid-column={gridColumn}>
+<button
+	class={keyboardBtn({ variant: delayedVariant, pressed })}
+	on:click={onClick}
+	style:grid-column={gridColumn}
+>
 	<span>
 		{key}
 	</span>
@@ -70,7 +82,7 @@
 
 		width: 100%;
 		height: 100%;
-		transition: transform var(--motion), opacity var(--appearance);
+		transition: all var(--appearance), transform var(--motion);
 	}
 
 	.keyboard-btn:hover span {
