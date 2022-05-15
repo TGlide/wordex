@@ -1,5 +1,6 @@
 <script lang="ts">
 	import CommandMenu from '$lib/components/CommandMenu.svelte';
+	import Toasts from '$lib/components/Toasts.svelte';
 	import '../styles/index.css';
 </script>
 
@@ -9,6 +10,7 @@
 
 <main>
 	<CommandMenu />
+	<Toasts />
 	<slot />
 </main>
 
