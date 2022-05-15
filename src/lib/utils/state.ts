@@ -1,4 +1,4 @@
-import { CellState, KeyState, type Word } from '$lib/types';
+import { CellState, KeyState, Locale, localeMap, type Word } from '$lib/types';
 import { range } from './array';
 import { objectEntries } from './object';
 import { getLetters, isLetter, normalizeString } from './string';
@@ -96,9 +96,10 @@ const cellStateEmojiMap = {
 export const getEndgameShareString = (
 	tries: Word[],
 	maxTries: number,
-	dailyWord: string
+	dailyWord: string,
+	locale: Locale
 ): string => {
-	let str = `Wordex ${tries.length - 1}/${maxTries}\n\n`;
+	let str = `Wordex (${localeMap[locale]}) ${tries.length - 1}/${maxTries}\n\n`;
 
 	tries.slice(0, -1).forEach((word) => {
 		const cellStates = getCellStates(word, dailyWord);

@@ -24,6 +24,11 @@ export enum Locale {
 	PT = 'pt'
 }
 
+export const localeMap = {
+	[Locale.PT]: '🇵🇹 Pt',
+	[Locale.EN]: '🇬🇧 En'
+};
+
 export function isLocale(value: unknown): value is Locale {
 	return Object.values(Locale).includes(value as Locale);
 }
