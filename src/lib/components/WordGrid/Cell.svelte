@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-	import { ROW_FLIP_DURATION } from '$lib/constants';
+	import { ROW_FLIP_DELAY, ROW_FLIP_DURATION } from '$lib/constants';
 	import { CellState } from '$lib/types';
 	import { cva, type VariantProps } from 'class-variance-authority';
 	import { scale } from 'svelte/transition';
@@ -31,7 +31,8 @@
 
 <div
 	class={cell({ state, disabled, selected })}
-	style:animation-delay={`${col * ROW_FLIP_DURATION}ms`}
+	style:animation-delay={`${col * ROW_FLIP_DELAY}ms`}
+	style:animation-duration={`${ROW_FLIP_DURATION}ms`}
 	on:click
 >
 	{#if letter}
@@ -87,7 +88,7 @@
 	.cell--correct,
 	.cell--present,
 	.cell--absent {
-		animation: flip 0.75s ease;
+		animation: flip ease;
 		animation-fill-mode: backwards;
 		background-color: var(--flip-bg-color);
 		border-color: transparent;

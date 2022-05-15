@@ -3,21 +3,14 @@
 	import { keyDispatcher } from '$lib/store/keyDispatcher';
 	import { range } from '$lib/utils/array';
 	import { getRowStates } from '$lib/utils/state';
-	import { onMount } from 'svelte';
 	import Cell from './Cell.svelte';
 
 	// State
 	$: currentRow = $store.tries.length - 1;
 
 	// Lifecycle
-	onMount(() => {
-		const listener = keyDispatcher.addListener((key, code) => {
-			store.onKeyDown({ key: key.toLowerCase(), code: code ?? '', metaKey: false });
-		});
-
-		return () => {
-			keyDispatcher.removeListener(listener);
-		};
+	keyDispatcher.addListenerOnMount((key, code) => {
+		store.onKeyDown({ key: key.toLowerCase(), code: code ?? '', metaKey: false });
 	});
 
 	// Methods

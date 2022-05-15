@@ -5,7 +5,6 @@
 	import WordGrid from '$lib/components/WordGrid/index.svelte';
 	import { supabase } from '$lib/constants';
 	import { store } from '$lib/store';
-	import { toastDispatcher } from '$lib/store/toastDispatcher';
 	import { wordStore } from '$lib/store/words';
 	import { randomPick } from '$lib/utils/array';
 	import type { Load } from '.svelte-kit/types/src/routes';
@@ -81,8 +80,6 @@
 	let timesClicked = 0;
 
 	const onLogoClick = () => {
-		toastDispatcher.dispatch('Clicked the logo!');
-
 		timesClicked++;
 
 		if (timesClicked >= 5) {

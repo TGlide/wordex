@@ -1,10 +1,11 @@
-import { projectVersion, ROW_FLIP_DURATION } from '$lib/constants';
+import { projectVersion, ROW_FLIP_DELAY, ROW_FLIP_DURATION } from '$lib/constants';
 import type { Word } from '$lib/types';
 import { GameState } from '$lib/types';
 import { decrement, increment } from '$lib/utils/number';
 import { getCorrectWord, isLetter, normalizeString } from '$lib/utils/string';
 import { get } from 'svelte/store';
 import { localStorageWritable } from './localStorageWritable';
+import { toastDispatcher } from './toastDispatcher';
 import { wordStore } from './words';
 
 export type Store = {
@@ -23,29 +24,36 @@ const isFull = (word: Word, wordSize: number) => {
 };
 
 // Utils
-const addTry = (prev: Store) => {
-	const words = get(wordStore);
+const rowFlipCallback = (rowSize: number, callback: () => void) => {
+	// Callback after row finishes flipping
+	setTimeout(callback, ROW_FLIP_DELAY * rowSize + ROW_FLIP_DURATION);
+};
 
+const addTry = (prev: Store) => {
 	if (prev.gameState !== GameState.PLAYING) {
 		return prev;
 	}
 
+	const words = get(wordStore);
+
 	let gameState: GameState = prev.gameState;
 	const currentRow = prev.tries.length - 1;
 	const currentTry = prev.tries[currentRow].join('');
-	const correctWord = getCorrectWord(words, currentTry);
 
-	if (normalizeString(prev.dailyWord) === normalizeString(correctWord)) {
+	if (normalizeString(prev.dailyWord) === normalizeString(currentTry)) {
 		gameState = GameState.WON;
+		rowFlipCallback(prev.wordSize, () => toastDispatcher.dispatch({ text: `You won!` }));
 	} else if (currentRow >= prev.maxTries - 1) {
 		gameState = GameState.LOST;
 	}
+
+	const correctTrySpelling = getCorrectWord(words, currentTry);
 
 	return {
 		...prev,
 		gameState,
 		letterIdx: 0,
-		tries: [...prev.tries.slice(0, currentRow), correctWord.split(''), []]
+		tries: [...prev.tries.slice(0, currentRow), correctTrySpelling.split(''), []]
 	};
 };
 
@@ -140,13 +148,11 @@ const createStore = () => {
 	};
 
 	const onEnterRow = (prev: Store) => {
-		const wordSize = prev.wordSize;
-
-		setTimeout(() => {
+		rowFlipCallback(prev.wordSize, () => {
 			store.update((prev) => {
 				return { ...prev, disabled: false };
 			});
-		}, ROW_FLIP_DURATION * wordSize);
+		});
 
 		return { ...addTry(prev), disabled: true };
 	};

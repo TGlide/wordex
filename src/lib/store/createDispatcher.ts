@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { onMount } from 'svelte';
 import { get, writable } from 'svelte/store';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -27,5 +28,12 @@ export const createDispatcher = <Callback extends (...args: any) => void>() => {
 		});
 	};
 
-	return { ...store, addListener, removeListener, dispatch };
+	const addListenerOnMount = (callback: Callback) => {
+		onMount(() => {
+			const id = addListener(callback);
+			return () => removeListener(id);
+		});
+	};
+
+	return { ...store, addListener, removeListener, dispatch, addListenerOnMount };
 };

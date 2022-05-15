@@ -7,4 +7,5 @@ export const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
-export const ROW_FLIP_DURATION = 250;
+export const ROW_FLIP_DELAY = 250;
+export const ROW_FLIP_DURATION = 750;

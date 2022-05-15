@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { store } from '$lib/store';
+	import { toastDispatcher } from '$lib/store/toastDispatcher';
 	import { GameState } from '$lib/types';
 	import Button from '$lib/UI/Button.svelte';
 	import Modal from '$lib/UI/Modal.svelte';
@@ -7,8 +8,24 @@
 	import copy from 'clipboard-copy';
 
 	$: visible = $store.gameState !== GameState.PLAYING && !$store.disabled;
+	$: shareString = getEndgameShareString($store);
+	$: {
+		(() => {
+			if (!visible) return;
+			if ($store.gameState === GameState.LOST) {
+				toastDispatcher.dispatch({
+					text: `Correct word: ${$store.dailyWord}`,
+					duration: -1,
+					dismissable: false
+				});
+			} else {
+				toastDispatcher.dispatch({ text: `You won!` });
+			}
+		})();
+	}
 
 	let timesClicked = 0;
+
 	const onResultsClick = () => {
 		timesClicked++;
 
@@ -18,7 +35,10 @@
 		}
 	};
 
-	$: shareString = getEndgameShareString($store);
+	const onShare = () => {
+		copy(shareString);
+		toastDispatcher.dispatch({ text: 'Copied to clipboard' });
+	};
 </script>
 
 <Modal {visible}>
@@ -29,7 +49,7 @@
 			<h3>{$store.tries.length - 1}/{$store.maxTries}</h3>
 			<h4>tries</h4>
 		</div>
-		<Button on:click={() => copy(shareString)}>Share</Button>
+		<Button on:click={onShare}>Share</Button>
 	</div>
 </Modal>
 

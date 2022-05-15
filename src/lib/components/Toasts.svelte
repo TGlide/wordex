@@ -1,31 +1,28 @@
 <script lang="ts">
-	import { toastDispatcher } from '$lib/store/toastDispatcher';
-	import { onMount } from 'svelte';
+	import { toastDispatcher, type Toast } from '$lib/store/toastDispatcher';
 	import { scale } from 'svelte/transition';
 
-	let toast: string | null = null;
+	const DEFAULT_DURATION = 5000;
+
+	let toast: Toast | null = null;
 	let timeout: NodeJS.Timeout | null = null;
 
-	onMount(() => {
-		const listener = toastDispatcher.addListener((text) => {
-			toast = text;
-		});
-
-		return () => {
-			toastDispatcher.removeListener(listener);
-		};
-	});
+	toastDispatcher.addListenerOnMount((t) => (toast = t));
 
 	$: {
 		if (toast) {
 			timeout && clearTimeout(timeout);
-			timeout = setTimeout(() => {
-				toast = null;
-			}, 30000);
+
+			if ((toast.duration ?? 0) >= 0) {
+				timeout = setTimeout(() => {
+					toast = null;
+				}, toast.duration ?? DEFAULT_DURATION);
+			}
 		}
 	}
 
 	const onClick = () => {
+		if (toast?.dismissable === false) return;
 		toast = null;
 		timeout && clearTimeout(timeout);
 	};
@@ -33,8 +30,13 @@
 
 <div class="toasts">
 	{#if toast}
-		<div class="toast" on:click={onClick} transition:scale|local={{ duration: 250 }}>
-			{toast}
+		<div
+			class="toast"
+			class:disabled={toast.dismissable === false}
+			on:click={onClick}
+			transition:scale|local={{ duration: 250 }}
+		>
+			{toast.text}
 		</div>
 	{/if}
 </div>
@@ -46,6 +48,7 @@
 		bottom: 0;
 		right: 0;
 		left: 0;
+		z-index: 100;
 
 		display: flex;
 		justify-content: center;
@@ -68,11 +71,15 @@
 		transition: background var(--appearance);
 	}
 
-	.toast:hover {
+	.toast.disabled {
+		cursor: default;
+	}
+
+	.toast:hover:not(.disabled) {
 		background-color: hsla(var(--palette-cyan-30-hsl), 0.75);
 	}
 
-	.toast:active {
+	.toast:active:not(.disabled) {
 		background-color: var(--palette-cyan-20);
 	}
 </style>
