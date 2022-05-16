@@ -4,7 +4,7 @@
 	import { switchTheme } from '$lib/utils/theme';
 </script>
 
-<Button on:click={switchTheme}>
+<Button on:click={switchTheme} variant="outline">
 	<div class="dark">
 		<Icon variant="moon" />
 	</div>
@@ -12,3 +12,9 @@
 		<Icon variant="sun" />
 	</div>
 </Button>
+
+<style>
+	div {
+		transform: translateY(1px);
+	}
+</style>

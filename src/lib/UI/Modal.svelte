@@ -26,6 +26,7 @@
 		background-color: hsla(var(--black-hsl), 0.5);
 		width: 100%;
 		height: 100%;
+		z-index: 10;
 
 		opacity: 0;
 
@@ -40,7 +41,7 @@
 	}
 
 	.content {
-		background-color: var(--palette-grey-15);
+		background-color: var(--underground);
 		border-radius: var(--radii-md);
 		padding: 1rem;
 

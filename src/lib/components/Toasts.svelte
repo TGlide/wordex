@@ -59,7 +59,7 @@
 	.toast {
 		pointer-events: all;
 
-		background-color: var(--palette-cyan-30);
+		background-color: var(--accent);
 		border-radius: var(--radii-md);
 		cursor: pointer;
 		font-size: 1.5rem;
@@ -76,10 +76,10 @@
 	}
 
 	.toast:hover:not(.disabled) {
-		background-color: hsla(var(--palette-cyan-30-hsl), 0.75);
+		background-color: var(--accent-hover);
 	}
 
 	.toast:active:not(.disabled) {
-		background-color: var(--palette-cyan-20);
+		background-color: var(--accent-active);
 	}
 </style>

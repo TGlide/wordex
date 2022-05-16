@@ -4,7 +4,8 @@
 	const button = cva('button', {
 		variants: {
 			variant: {
-				primary: 'button--primary'
+				primary: 'button--primary',
+				outline: 'button--outline'
 			}
 		}
 	});
@@ -28,18 +29,32 @@
 
 		padding: 0.75rem 1rem;
 
-		transition: all var(--appearance);
+		transition: border var(--appearance);
 	}
 
 	.button--primary {
-		background-color: var(--palette-cyan-50);
+		background-color: var(--accent);
 	}
 
 	.button--primary:hover {
-		background-color: var(--palette-cyan-40);
+		background-color: var(--accent-hover);
 	}
 
 	.button--primary:active {
-		background-color: var(--palette-cyan-30);
+		background-color: var(--accent-active);
+	}
+
+	.button--outline {
+		background-color: var(--underground);
+		border: 0.1rem solid var(--border);
+		color: var(--primary);
+	}
+
+	.button--outline:hover {
+		border-color: var(--border-hover);
+	}
+
+	.button--outline:active {
+		border-color: var(--border-active);
 	}
 </style>

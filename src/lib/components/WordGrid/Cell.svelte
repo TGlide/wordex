@@ -77,7 +77,7 @@
 	}
 
 	.cell--selected:not(.cell--disabled) {
-		border-bottom-color: var(--palette-grey-70);
+		border-bottom-color: var(--border-active);
 	}
 
 	.cell--disabled {

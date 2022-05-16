@@ -89,11 +89,11 @@
 	});
 </script>
 
+<EndgameModal />
 <section class="container themed">
 	<Header />
 	<WordGrid />
 	<Keyboard />
-	<EndgameModal />
 </section>
 
 <style>

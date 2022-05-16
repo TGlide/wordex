@@ -76,7 +76,7 @@
 		display: grid;
 		place-items: center;
 
-		background-color: var(--palette-grey-20);
+		background-color: var(--foreground);
 		border-radius: var(--radii-sm);
 		font-size: clamp(0.5rem, 4vw, 1.25rem);
 
