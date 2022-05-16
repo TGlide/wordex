@@ -12,7 +12,12 @@
 </script>
 
 <div class={modal({ visible })} on:click>
-	<div class="content" on:click|stopPropagation>
+	<div
+		class="content"
+		on:click|stopPropagation={() => {
+			// no-op
+		}}
+	>
 		<slot />
 	</div>
 </div>
