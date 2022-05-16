@@ -1,5 +1,9 @@
 <script lang="ts">
-	import { toastDispatcher, type Toast } from '$lib/dispatchers/toastDispatcher';
+	import {
+		clearToastDispatcher,
+		toastDispatcher,
+		type Toast
+	} from '$lib/dispatchers/toastDispatcher';
 	import { scale } from 'svelte/transition';
 
 	const DEFAULT_DURATION = 5000;
@@ -8,6 +12,10 @@
 	let timeout: NodeJS.Timeout | null = null;
 
 	toastDispatcher.addListenerOnMount((t) => (toast = t));
+	clearToastDispatcher.addListenerOnMount(() => {
+		toast = null;
+		timeout && clearTimeout(timeout);
+	});
 
 	$: {
 		if (toast) {

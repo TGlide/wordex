@@ -1,4 +1,6 @@
-import { CellState, KeyState, Locale, localeMap, type Word } from '$lib/types';
+import { statsModalDispatcher } from '$lib/dispatchers/statsModalDispatcher';
+import { toastDispatcher } from '$lib/dispatchers/toastDispatcher';
+import { CellState, GameState, KeyState, Locale, localeMap, type Word } from '$lib/types';
 import { range } from './array';
 import { objectEntries } from './object';
 import { getLetters, isLetter, normalizeString } from './string';
@@ -85,6 +87,21 @@ export const getKeyStates = (tries: Word[], dailyWord: string): Record<string, K
 	});
 
 	return result;
+};
+
+export const triggerEndgame = (gameState: GameState, dailyWord: string) => {
+	if (gameState === GameState.PLAYING) return;
+
+	statsModalDispatcher.dispatch();
+	if (gameState === GameState.LOST) {
+		toastDispatcher.dispatch({
+			text: `Correct word: ${dailyWord}`,
+			duration: -1,
+			dismissable: false
+		});
+	} else {
+		toastDispatcher.dispatch({ text: `You won!` });
+	}
 };
 
 const cellStateEmojiMap = {

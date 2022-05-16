@@ -1,8 +1,8 @@
 import { projectVersion, ROW_FLIP_DELAY, ROW_FLIP_DURATION } from '$lib/constants';
-import { toastDispatcher } from '$lib/dispatchers/toastDispatcher';
 import type { Word } from '$lib/types';
 import { GameState } from '$lib/types';
 import { decrement, increment } from '$lib/utils/number';
+import { triggerEndgame } from '$lib/utils/state';
 import { getCorrectWord, isLetter, normalizeString } from '$lib/utils/string';
 import { get } from 'svelte/store';
 import { localStorageWritable } from './localStorageWritable';
@@ -42,10 +42,11 @@ const addTry = (prev: Store) => {
 
 	if (normalizeString(prev.dailyWord) === normalizeString(currentTry)) {
 		gameState = GameState.WON;
-		rowFlipCallback(prev.wordSize, () => toastDispatcher.dispatch({ text: `You won!` }));
 	} else if (currentRow >= prev.maxTries - 1) {
 		gameState = GameState.LOST;
 	}
+
+	rowFlipCallback(prev.wordSize, () => triggerEndgame(gameState, prev.dailyWord));
 
 	const correctTrySpelling = getCorrectWord(words, currentTry);
 

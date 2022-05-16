@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { statsModalDispatcher } from '$lib/dispatchers/statsModalDispatcher';
 	import { toastDispatcher } from '$lib/dispatchers/toastDispatcher';
 	import { store } from '$lib/store';
 	import { locale } from '$lib/store/locale';
@@ -8,44 +9,23 @@
 	import { getEndgameShareString } from '$lib/utils/state';
 	import copy from 'clipboard-copy';
 
-	$: visible = $store.gameState !== GameState.PLAYING && !$store.disabled;
+	let visible = false;
+
+	statsModalDispatcher.addListenerOnMount(() => {
+		visible = true;
+	});
+
 	$: shareString = getEndgameShareString($store.tries, $store.maxTries, $store.dailyWord, $locale);
-	$: {
-		(() => {
-			if (!visible) return;
-			if ($store.gameState === GameState.LOST) {
-				toastDispatcher.dispatch({
-					text: `Correct word: ${$store.dailyWord}`,
-					duration: -1,
-					dismissable: false
-				});
-			} else {
-				toastDispatcher.dispatch({ text: `You won!` });
-			}
-		})();
-	}
-
-	let timesClicked = 0;
-
-	const onResultsClick = () => {
-		timesClicked++;
-
-		if (timesClicked >= 5) {
-			store.resetTries();
-			timesClicked = 0;
-		}
-	};
-
 	const onShare = () => {
 		copy(shareString);
 		toastDispatcher.dispatch({ text: 'Copied to clipboard' });
 	};
 </script>
 
-<Modal {visible}>
+<Modal {visible} on:click={() => (visible = false)}>
 	<div class="content">
 		<div>
-			<h1 on:click={onResultsClick}>Results</h1>
+			<h1>Results</h1>
 			<h2>{$store.gameState === GameState.WON ? '🤩' : '😢'}</h2>
 			<h3>{$store.tries.length - 1}/{$store.maxTries}</h3>
 			<h4>tries</h4>

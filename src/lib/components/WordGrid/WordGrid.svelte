@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { keyDispatcher } from '$lib/dispatchers/keyDispatcher';
 	import { store } from '$lib/store';
+	import { GameState } from '$lib/types';
 	import { range } from '$lib/utils/array';
 	import { getCellStates } from '$lib/utils/state';
 	import Cell from './Cell.svelte';
@@ -29,10 +30,11 @@
 
 		{#each range(0, $store.wordSize) as col}
 			{@const letter = $store.tries[row]?.[col]}
-			{@const selected = row === currentRow && $store.letterIdx === col}
+			{@const selected =
+				$store.gameState === GameState.PLAYING && row === currentRow && $store.letterIdx === col}
 
 			<Cell
-				disabled={row !== currentRow || $store.disabled}
+				disabled={row !== currentRow || $store.disabled || $store.gameState !== GameState.PLAYING}
 				state={cellsState[col]}
 				{selected}
 				{letter}

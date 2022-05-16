@@ -1,14 +1,15 @@
 <script lang="ts" context="module">
 	import { browser } from '$app/env';
-	import EndgameModal from '$lib/components/EndgameModal.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import Keyboard from '$lib/components/Keyboard/Keyboard.svelte';
+	import StatsModal from '$lib/components/StatsModal.svelte';
 	import WordGrid from '$lib/components/WordGrid/WordGrid.svelte';
 	import { supabase } from '$lib/constants';
 	import { store } from '$lib/store';
 	import { locale } from '$lib/store/locale';
 	import { wordStore } from '$lib/store/words';
 	import { randomPick } from '$lib/utils/array';
+	import { triggerEndgame } from '$lib/utils/state';
 	import { normalizeString } from '$lib/utils/string';
 	import { fetchWords } from '$lib/utils/words';
 	import type { Load } from '.svelte-kit/types/src/routes';
@@ -86,10 +87,11 @@
 		store.checkVersion();
 		store.setDailyWord(dailyWord);
 		$wordStore = wordList;
+		triggerEndgame($store.gameState, dailyWord);
 	});
 </script>
 
-<EndgameModal />
+<StatsModal />
 <section class="container themed">
 	<Header />
 	<WordGrid />
