@@ -2,6 +2,7 @@
 	import { store } from '$lib/store';
 	import { locale } from '$lib/store/locale';
 	import { isLocale, Locale, localeMap } from '$lib/types';
+	import ThemeSwitch from './ThemeSwitch.svelte';
 
 	let timesClicked = 0;
 
@@ -24,7 +25,10 @@
 </script>
 
 <header>
-	<div />
+	<div>
+		<ThemeSwitch />
+	</div>
+
 	<h1 on:click={onLogoClick}>Wordex</h1>
 
 	<div class="select-wrapper">

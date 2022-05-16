@@ -9,6 +9,15 @@
 	}
 }
 
+/* Theme */
+[data-theme='light'] .dark {
+	display: none;
+}
+
+[data-theme='dark'] .light {
+	display: none;
+}
+
 /* Flexbox */
 .flex {
 	display: flex;

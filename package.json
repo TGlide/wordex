@@ -44,6 +44,7 @@
 		"@supabase/supabase-js": "^1.35.3",
 		"class-variance-authority": "^0.2.1",
 		"clipboard-copy": "^4.0.1",
+		"feather-icons": "^4.29.0",
 		"uuid": "^8.3.2"
 	}
 }
