@@ -104,6 +104,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: space-between;
+		gap: 1rem;
 		height: 100%;
 	}
 </style>
