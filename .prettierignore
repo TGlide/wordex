@@ -1,3 +1,4 @@
 .vscode/settings.json
 tsconfig.json
 .svelte-kit
+*.md
