@@ -25,11 +25,11 @@
 
 		font-weight: 600;
 		font-family: var(--ff-sans);
-		font-size: 1rem;
+		font-size: var(--btn-font-size, 1rem);
 
-		padding: 0.75rem 1rem;
+		padding: 0.75em 1em;
 
-		transition: border var(--appearance);
+		transition: border var(--appearance), background var(--appearance);
 	}
 
 	.button--primary {
@@ -45,16 +45,16 @@
 	}
 
 	.button--outline {
-		background-color: var(--underground);
-		border: 0.1rem solid var(--border);
+		background-color: transparent;
+		padding: 0.6em 0.75em;
 		color: var(--primary);
 	}
 
 	.button--outline:hover {
-		border-color: var(--border-hover);
+		background-color: var(--foreground);
 	}
 
 	.button--outline:active {
-		border-color: var(--border-active);
+		background-color: hsla(var(--foreground-hsl), 0.8);
 	}
 </style>

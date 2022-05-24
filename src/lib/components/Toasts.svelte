@@ -11,11 +11,13 @@
 	let toast: Toast | null = null;
 	let timeout: NodeJS.Timeout | null = null;
 
-	toastDispatcher.addListenerOnMount((t) => (toast = t));
-	clearToastDispatcher.addListenerOnMount(() => {
+	const clearToasts = () => {
 		toast = null;
 		timeout && clearTimeout(timeout);
-	});
+	};
+
+	toastDispatcher.addListenerOnMount((t) => (toast = t));
+	clearToastDispatcher.addListenerOnMount(clearToasts);
 
 	$: {
 		if (toast) {

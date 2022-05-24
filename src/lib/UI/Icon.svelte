@@ -298,25 +298,12 @@
 <script lang="ts">
 	import featherSprite from '../../../node_modules/feather-icons/dist/feather-sprite.svg';
 
-	const sizeMap = {
-		sm: '0.75rem',
-		base: '1rem',
-		md: '1.25rem',
-		lg: '1.5rem',
-		xl: '2.25rem'
-	} as const;
-	type Size = keyof typeof sizeMap;
-
 	export let variant: IconVariant;
-	export let size: Size = 'base';
-
-	const width = sizeMap[size];
-	const height = sizeMap[size];
 
 	$: href = `${featherSprite}#${variant}`;
 </script>
 
-<svg style:width style:height {...$$restProps}>
+<svg {...$$restProps}>
 	<use {href} />
 </svg>
 
@@ -327,5 +314,7 @@
 		stroke-linecap: round;
 		stroke-linejoin: round;
 		fill: none;
+		width: var(--icon-size, 1rem);
+		height: var(--icon-size, 1rem);
 	}
 </style>

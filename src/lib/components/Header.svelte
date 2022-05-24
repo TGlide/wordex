@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { statsModalDispatcher } from '$lib/dispatchers/statsModalDispatcher';
 	import { clearToastDispatcher } from '$lib/dispatchers/toastDispatcher';
 	import { store } from '$lib/store';
@@ -33,8 +34,11 @@
 <header>
 	<div class="actions">
 		<ThemeSwitch />
-		<Button variant="outline" on:click={() => statsModalDispatcher.dispatch()}>
+		<Button variant="outline" on:click={statsModalDispatcher.dispatch}>
 			<Icon variant="bar-chart" />
+		</Button>
+		<Button variant="outline" on:click={() => goto('/about')}>
+			<Icon variant="info" />
 		</Button>
 	</div>
 
@@ -55,7 +59,7 @@
 		align-items: center;
 		gap: 1rem;
 		width: 100%;
-		max-width: 500px;
+		max-width: 700px;
 	}
 
 	header > * {
@@ -73,7 +77,11 @@
 
 	.actions {
 		display: flex;
-		gap: clamp(0.1rem, 1vw, 0.5rem);
+		font-size: clamp(0.1rem, 1vw, 0.5rem);
+		gap: 1em;
+
+		--btn-font-size: 2em;
+		--icon-size: clamp(1rem, 1.25em, 1.5rem);
 	}
 
 	.select-wrapper {

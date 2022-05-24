@@ -3,6 +3,7 @@
 	import Header from '$lib/components/Header.svelte';
 	import Keyboard from '$lib/components/Keyboard/Keyboard.svelte';
 	import StatsModal from '$lib/components/StatsModal.svelte';
+	import Toasts from '$lib/components/Toasts.svelte';
 	import WordGrid from '$lib/components/WordGrid/WordGrid.svelte';
 	import { supabase } from '$lib/constants';
 	import { store } from '$lib/store';
@@ -91,6 +92,7 @@
 	});
 </script>
 
+<Toasts />
 <StatsModal />
 <section class="container themed">
 	<Header />

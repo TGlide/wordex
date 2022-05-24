@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Toasts from '$lib/components/Toasts.svelte';
 	import '../styles/index.css';
 </script>
 
@@ -8,7 +7,6 @@
 </svelte:head>
 
 <main>
-	<Toasts />
 	<slot />
 </main>
 
