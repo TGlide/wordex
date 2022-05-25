@@ -1,5 +1,5 @@
 declare module 'clipboard-copy' {
-	const copy: (str: string) => void;
+  const copy: (str: string) => void;
 
-	export default copy;
+  export default copy;
 }

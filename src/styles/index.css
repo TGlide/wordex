@@ -7,17 +7,17 @@
 /* ------ */
 
 html {
-	height: 100%;
+  height: 100%;
 }
 
 body {
-	height: calc(100% - var(--inset));
-	background-color: var(--bg);
-	color: var(--primary);
-	margin: 0;
-	margin-top: var(--inset);
-	font-family: var(--ff-sans);
+  height: calc(100% - var(--inset));
+  background-color: var(--bg);
+  color: var(--primary);
+  margin: 0;
+  margin-top: var(--inset);
+  font-family: var(--ff-sans);
 
-	/* Prevent zoom gestures */
-	touch-action: pan-x pan-y;
+  /* Prevent zoom gestures */
+  touch-action: pan-x pan-y;
 }

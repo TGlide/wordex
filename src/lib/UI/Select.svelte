@@ -1,28 +1,28 @@
 <script lang="ts">
-	export let value: string | number;
+  export let value: string | number;
 </script>
 
 <select on:change {value}>
-	<slot />
+  <slot />
 </select>
 
 <style>
-	select {
-		background: var(--underground);
-		border: 0.1rem solid var(--border);
-		border-radius: var(--radii-sm);
-		color: var(--primary);
+  select {
+    background: var(--underground);
+    border: 0.1rem solid var(--border);
+    border-radius: var(--radii-sm);
+    color: var(--primary);
 
-		padding: 0.75rem 0.25rem;
-		width: 100%;
-		max-width: 80px;
-	}
+    padding: 0.75rem 0.25rem;
+    width: 100%;
+    max-width: 80px;
+  }
 
-	select:hover {
-		border-color: var(--border-hover);
-	}
+  select:hover {
+    border-color: var(--border-hover);
+  }
 
-	select:active {
-		border-color: var(--border-active);
-	}
+  select:active {
+    border-color: var(--border-active);
+  }
 </style>

@@ -1,9 +1,9 @@
 import { createDispatcher } from './createDispatcher';
 
 export type Toast = {
-	text: string;
-	duration?: number;
-	dismissable?: boolean;
+  text: string;
+  duration?: number;
+  dismissable?: boolean;
 };
 
 type Callback = (toast: Toast) => void;
