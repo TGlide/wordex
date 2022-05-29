@@ -9,6 +9,7 @@ import { localStorageWritable } from './localStorageWritable';
 import { wordStore } from './words';
 
 export type Store = {
+  date: Date;
   tries: Array<Word>;
   dailyWord: string;
   gameState: GameState;
@@ -115,7 +116,8 @@ const createStore = () => {
     maxTries: 6,
     letterIdx: 0,
     disabled: false,
-    version: '0.0.0'
+    version: '0.0.0',
+    date: new Date()
   };
 
   const store = localStorageWritable<Store>('store', {
@@ -124,6 +126,7 @@ const createStore = () => {
   });
 
   const checkVersion = () => {
+    console.log(projectVersion);
     if (get(store).version !== projectVersion) {
       store.set({ ...defaultValue, version: projectVersion });
     }
@@ -135,6 +138,10 @@ const createStore = () => {
       gameState: GameState.PLAYING,
       tries: [[]]
     }));
+  };
+
+  const reset = () => {
+    store.set({ ...defaultValue, version: projectVersion });
   };
 
   const setDailyWord = (word: string) => {
@@ -187,6 +194,7 @@ const createStore = () => {
   return {
     ...store,
     resetTries,
+    reset,
     setDailyWord,
     onKeyDown,
     checkVersion

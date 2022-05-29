@@ -27,7 +27,7 @@
     if (!isLocale(value)) return;
 
     $locale = value;
-    store.resetTries();
+    store.reset();
     location.reload();
   };
 </script>

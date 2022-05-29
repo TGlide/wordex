@@ -10,6 +10,7 @@
   import { locale } from '$lib/store/locale';
   import { wordStore } from '$lib/store/words';
   import { randomPick } from '$lib/utils/array';
+  import { isToday } from '$lib/utils/date';
   import { triggerEndgame } from '$lib/utils/state';
   import { normalizeString } from '$lib/utils/string';
   import { fetchWords } from '$lib/utils/words';
@@ -19,12 +20,25 @@
 
   export const load: Load = async () => {
     if (!browser) {
-      // Loading the dictionary from the server is too costly, and vercel explodes
+      // Loading the dictionary from the server is too costly, and vercel explodes.
+      // Also, we're getting values from localStorage, so we can't use it in the server.
       return {
         status: 200,
         props: {
-          dailyWord: 'words',
-          wordList: []
+          dailyWord: '',
+          wordList: null
+        }
+      };
+    }
+
+    store.checkVersion();
+    const storeData = get(store);
+    if (isToday(storeData.date) && storeData.dailyWord.length > 0) {
+      return {
+        status: 200,
+        props: {
+          dailyWord: storeData.dailyWord,
+          wordList: null
         }
       };
     }
@@ -82,12 +96,11 @@
 
 <script lang="ts">
   export let dailyWord: string;
-  export let wordList: string[];
+  export let wordList: string[] | null;
 
   onMount(async () => {
-    store.checkVersion();
     store.setDailyWord(dailyWord);
-    $wordStore = wordList;
+    $wordStore = wordList ?? (await fetchWords($locale));
     triggerEndgame($store.gameState, dailyWord);
   });
 </script>
