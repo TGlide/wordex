@@ -79,4 +79,6 @@ You can check out a live preview at: https://wordex.app/
 - [X] Multiple language support
 - [ ] Multiple word lengths
 - [ ] Add more languages
-- [ ] Improve about section
+- [ ] Improve stats modal
+- [ ] i18n
+- [ ] Add tutorial
