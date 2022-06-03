@@ -21,12 +21,14 @@ export enum KeyState {
 
 export enum Locale {
   EN = 'en',
-  PT = 'pt'
+  PT = 'pt',
+  ES = 'es'
 }
 
 export const localeMap = {
   [Locale.PT]: '🇧🇷 Pt',
-  [Locale.EN]: '🇬🇧 En'
+  [Locale.EN]: '🇬🇧 En',
+  [Locale.ES]: '🇪🇸 Es'
 };
 
 export function isLocale(value: unknown): value is Locale {

@@ -12,7 +12,8 @@
     >
       wordle
     </a>
-    clone, made with SvelteKit.
+    clone, made with
+    <a href="https://kit.svelte.dev/" target="_blank" rel="noreferrer noopener">SvelteKit</a>.
   </p>
   <p>
     Made by

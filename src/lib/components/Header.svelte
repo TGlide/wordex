@@ -4,10 +4,11 @@
   import { clearToastDispatcher } from '$lib/dispatchers/toastDispatcher';
   import { store } from '$lib/store';
   import { locale } from '$lib/store/locale';
-  import { isLocale, Locale, localeMap } from '$lib/types';
+  import { isLocale, localeMap } from '$lib/types';
   import Button from '$lib/UI/Button.svelte';
   import Icon from '$lib/UI/Icon.svelte';
   import Select from '$lib/UI/Select.svelte';
+  import { objectKeys } from '$lib/utils/object';
   import ThemeSwitch from './ThemeSwitch.svelte';
 
   let timesClicked = 0;
@@ -47,8 +48,9 @@
 
   <div class="select-wrapper">
     <Select value={$locale} on:change={onChange}>
-      <option value={Locale.PT}>{localeMap[Locale.PT]}</option>
-      <option value={Locale.EN}>{localeMap[Locale.EN]}</option>
+      {#each objectKeys(localeMap) as key}
+        <option value={key}>{localeMap[key]}</option>
+      {/each}
     </Select>
   </div>
 </header>

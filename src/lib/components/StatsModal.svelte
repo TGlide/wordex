@@ -49,7 +49,7 @@
 
   h1 {
     font-family: var(--ff-sans);
-    font-weight: 400;
+    font-weight: 600;
     font-size: 2rem;
     text-align: center;
   }
