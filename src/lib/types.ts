@@ -26,8 +26,8 @@ export enum Locale {
 }
 
 export const localeMap = {
-  [Locale.PT]: '🇧🇷 Pt',
   [Locale.EN]: '🇬🇧 En',
+  [Locale.PT]: '🇧🇷 Pt',
   [Locale.ES]: '🇪🇸 Es'
 };
 
