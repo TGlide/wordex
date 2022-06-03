@@ -73,7 +73,6 @@
     height: var(--size);
 
     text-transform: uppercase;
-    font-weight: 800;
   }
 
   .cell--selected:not(.cell--disabled) {
@@ -107,5 +106,7 @@
 
   .letter {
     font-size: 0.5em;
+    font-weight: 800;
+    font-family: var(--ff-sans);
   }
 </style>

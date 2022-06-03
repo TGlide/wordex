@@ -79,6 +79,7 @@
     background-color: var(--foreground);
     border-radius: var(--radii-sm);
     font-size: clamp(0.5rem, 4vw, 1.25rem);
+    font-family: var(--ff-sans);
 
     width: 100%;
     height: 100%;

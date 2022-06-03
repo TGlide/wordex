@@ -51,6 +51,7 @@
       .select('word')
       .eq('created_at', new Date().toISOString().slice(0, 10))
       .eq('lang', get(locale));
+
     if (error) {
       return { status: 400 };
     }
@@ -65,7 +66,6 @@
       }, []);
 
       const dailyWord = randomPick(fiveLetterWords);
-      console.log(dailyWord, dailyWord.length, dailyWord.split(''));
 
       const { error } = await supabase
         .from('daily_words')

@@ -510,10 +510,15 @@
   resolved "https://registry.yarnpkg.com/@fontsource/eb-garamond/-/eb-garamond-4.5.8.tgz#af879d502ce045f7a4b0c317c2065818d84b149e"
   integrity sha512-RjSjojD5JvIYiRvmaei2E+dyVkiiBYthOQoIwLn9K6uStnjhXl00owlBZdrVLxc7dF7Hnu8J/OvIUguiLDWP/g==
 
-"@fontsource/inter@^4.5.10":
-  version "4.5.10"
-  resolved "https://registry.yarnpkg.com/@fontsource/inter/-/inter-4.5.10.tgz#c4e6839197dc4c77842eae9475ff0e036ff87fc9"
-  integrity sha512-YOt2/K8yo25MVBjrTImHxVimmyZEt0GcrWp2w7O29sdFX9SJqbGlOqjFJ1wI5yBbP6AmTeimyPE0UC/jjFRoIA==
+"@fontsource/poppins@^4.5.8":
+  version "4.5.8"
+  resolved "https://registry.yarnpkg.com/@fontsource/poppins/-/poppins-4.5.8.tgz#65ce9b32f31bda5a25c23001bcebf1c66e440320"
+  integrity sha512-HE9yLDxYJEcxooVrYvvEhtyxaYU32hQIx1+npKegVefceE0l0zi0ePqKWWxYxkFpyy6WuZSQ+9rai3INnYKEJA==
+
+"@fontsource/raleway@^4.5.8":
+  version "4.5.8"
+  resolved "https://registry.yarnpkg.com/@fontsource/raleway/-/raleway-4.5.8.tgz#39ad2c301f9bc5da5989cf11664ee0ec6ba788f0"
+  integrity sha512-4aHInZYFegsrX/8/roXUoZHLfgrPGkkQaH/CYDx486RKf+5V/GIIetnVt5SO9mLdOqeqKJrpgLkL7kSf24SYug==
 
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"

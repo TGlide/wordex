@@ -1,6 +1,19 @@
 <div class="container">
   <h1><a href="/">Wordex</a></h1>
-  <img src="https://avatars.githubusercontent.com/u/26071571?v=4" alt="" />
+  <p>
+    Wordex is a
+    <a href="https://github.com/TGlide/wordex" target="_blank" rel="noreferrer noopener">
+      open-source
+    </a>
+    <a
+      href="https://www.nytimes.com/games/wordle/index.html"
+      target="_blank"
+      rel="noreferrer noopener"
+    >
+      wordle
+    </a>
+    clone, made with SvelteKit.
+  </p>
   <p>
     Made by
     <a href="https://www.thomasglopes.com" target="_blank" rel="noreferrer noopener"
@@ -25,15 +38,12 @@
     user-select: none;
   }
 
-  img {
-    border-radius: 100%;
-    margin-top: 6rem;
-    width: 300px;
-  }
-
   p {
-    font-size: 2rem;
+    font-size: 1.75rem;
+    text-align: center;
+    line-height: 2.5rem;
     margin-top: 2rem;
+    max-width: 30rem;
   }
 
   p a {

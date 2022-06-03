@@ -65,9 +65,8 @@
   }
 
   h4 {
-    font-family: var(--ff-display);
     margin-top: 0.5rem;
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: 300;
   }
 </style>
