@@ -25,10 +25,10 @@
 <Modal {visible} on:click={() => (visible = false)}>
   <div class="content">
     <div>
-      <h1>Results</h1>
-      <h2>{$store.gameState === GameState.WON ? '🤩' : '😢'}</h2>
-      <h3>{$store.tries.length - 1}/{$store.maxTries}</h3>
-      <h4>tries</h4>
+      <h2>Results</h2>
+      <h3>{$store.gameState === GameState.WON ? '🤩' : '😢'}</h3>
+      <h4>{$store.tries.length - 1}/{$store.maxTries}</h4>
+      <h5>tries</h5>
     </div>
     <Button on:click={onShare}>Share</Button>
   </div>
@@ -47,24 +47,24 @@
     user-select: none;
   }
 
-  h1 {
+  h2 {
     font-family: var(--ff-sans);
     font-weight: 600;
     font-size: 2rem;
     text-align: center;
   }
 
-  h2 {
+  h3 {
     font-size: 3rem;
     margin-top: 2rem;
   }
 
-  h3 {
+  h4 {
     margin-top: 0.5rem;
     font-size: 2.5rem;
   }
 
-  h4 {
+  h5 {
     margin-top: 0.5rem;
     font-size: 1.5rem;
     font-weight: 300;
