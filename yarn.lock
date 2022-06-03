@@ -510,11 +510,6 @@
   resolved "https://registry.yarnpkg.com/@fontsource/eb-garamond/-/eb-garamond-4.5.8.tgz#af879d502ce045f7a4b0c317c2065818d84b149e"
   integrity sha512-RjSjojD5JvIYiRvmaei2E+dyVkiiBYthOQoIwLn9K6uStnjhXl00owlBZdrVLxc7dF7Hnu8J/OvIUguiLDWP/g==
 
-"@fontsource/poppins@^4.5.8":
-  version "4.5.8"
-  resolved "https://registry.yarnpkg.com/@fontsource/poppins/-/poppins-4.5.8.tgz#65ce9b32f31bda5a25c23001bcebf1c66e440320"
-  integrity sha512-HE9yLDxYJEcxooVrYvvEhtyxaYU32hQIx1+npKegVefceE0l0zi0ePqKWWxYxkFpyy6WuZSQ+9rai3INnYKEJA==
-
 "@fontsource/raleway@^4.5.8":
   version "4.5.8"
   resolved "https://registry.yarnpkg.com/@fontsource/raleway/-/raleway-4.5.8.tgz#39ad2c301f9bc5da5989cf11664ee0ec6ba788f0"

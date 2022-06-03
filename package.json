@@ -41,7 +41,6 @@
   "type": "module",
   "dependencies": {
     "@fontsource/eb-garamond": "^4.5.8",
-    "@fontsource/poppins": "^4.5.8",
     "@fontsource/raleway": "^4.5.8",
     "@supabase/supabase-js": "^1.35.3",
     "class-variance-authority": "^0.2.1",
