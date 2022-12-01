@@ -1,0 +1,21 @@
+{
+    "projectId": "6387f50c52b98699dc1b",
+    "projectName": "wordex",
+    "functions": [
+        {
+            "$id": "638805df6160944147b7",
+            "name": "create_daily_words",
+            "runtime": "node-16.0",
+            "path": "functions/create_daily_words",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15
+        }
+    ]
+}

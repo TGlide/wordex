@@ -43,7 +43,7 @@
   "dependencies": {
     "@fontsource/eb-garamond": "^4.5.8",
     "@fontsource/raleway": "^4.5.8",
-    "@supabase/supabase-js": "^1.35.3",
+    "appwrite": "^10.1.0",
     "class-variance-authority": "^0.2.1",
     "clipboard-copy": "^4.0.1",
     "feather-icons": "^4.29.0",

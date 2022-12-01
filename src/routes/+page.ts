@@ -1,74 +1,45 @@
-import { supabase } from '$lib/constants';
-import { store } from '$lib/store';
+import { browser } from '$app/environment';
+import { PUBLIC_COLLECTION_ID, PUBLIC_DATABASE_ID } from '$env/static/public';
+import { databases } from '$lib/services/appwrite';
 import { locale } from '$lib/store/locale';
-import { randomPick } from '$lib/utils/array';
-import { isToday } from '$lib/utils/date';
-import { normalizeString } from '$lib/utils/string';
+import type { WordDocument } from '$lib/types/word';
+import type { Models } from 'appwrite';
+
 import { fetchWords } from '$lib/utils/words';
+import { Query } from 'appwrite';
+import { get } from 'svelte/store';
 import type { PageLoad } from './$types';
 import { error } from '@sveltejs/kit';
-import { get } from 'svelte/store';
-import { browser } from '$app/environment';
 
 export const load: PageLoad = async () => {
-  if (!browser) {
-    // Loading the dictionary from the server is too costly, and vercel explodes.
-    // Also, we're getting values from localStorage, so we can't use it in the server.
-    return {
-      dailyWord: '',
-      wordList: null
-    };
-  }
-
-  store.checkVersion();
-  const storeData = get(store);
-  if (isToday(storeData.date) && storeData.dailyWord.length > 0) {
-    return {
-      dailyWord: storeData.dailyWord,
-      wordList: null
-    };
-  }
+  // store.checkVersion();
+  // const storeData = get(store);
+  // if (isToday(storeData.date) && storeData.dailyWord.length > 0) {
+  //   return {
+  //     dailyWord: storeData.dailyWord,
+  //     wordList: null
+  //   };
+  // }
 
   const storedLocale = get(locale);
-  const words = await fetchWords(storedLocale);
+  const words = browser ? await fetchWords(storedLocale) : [];
 
-  const { data, error: sbError } = await supabase
-    .from('daily_words')
-    .select('word')
-    .eq('created_at', new Date().toISOString().slice(0, 10))
-    .eq('lang', get(locale));
+  const todayFormatted = new Date().toISOString().split('T')[0];
 
-  if (sbError) {
+  const data: Models.DocumentList<WordDocument> = await databases.listDocuments(
+    PUBLIC_DATABASE_ID,
+    PUBLIC_COLLECTION_ID,
+    [Query.equal('lang', get(locale)), Query.equal('created_at', todayFormatted)]
+  );
+
+  console.log(data.documents);
+
+  if (!data || data.documents.length === 0) {
     throw error(400);
   }
 
-  if (!data || data.length === 0) {
-    const fiveLetterWords = words.reduce<string[]>((acc, curr) => {
-      const normalized = normalizeString(curr);
-      if (normalized.length === 5) {
-        return [...acc, normalized];
-      }
-      return acc;
-    }, []);
-
-    const dailyWord = randomPick(fiveLetterWords);
-
-    const { error: sbError } = await supabase
-      .from('daily_words')
-      .insert({ word: dailyWord, created_at: new Date(), lang: storedLocale });
-
-    if (sbError) {
-      throw error(400);
-    }
-
-    return {
-      dailyWord,
-      wordList: words
-    };
-  }
-
   return {
-    dailyWord: data[0].word,
+    dailyWord: data.documents[0].word,
     wordList: words
   };
 };

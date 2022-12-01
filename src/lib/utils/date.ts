@@ -1,5 +1,4 @@
 export const isToday = (date: Date | string) => {
-  console.log('a');
   const today = new Date();
   const dateToCompare = new Date(date);
 
