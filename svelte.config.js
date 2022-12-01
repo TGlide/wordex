@@ -8,14 +8,7 @@ const config = {
   preprocess: preprocess(),
 
   kit: {
-    adapter: adapter(),
-    vite: {
-      server: {
-        fs: {
-          allow: ['.']
-        }
-      }
-    }
+    adapter: adapter()
   }
 };
 
