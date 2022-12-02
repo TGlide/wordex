@@ -1,14 +1,4 @@
-const sdk = require('node-appwrite');
-
-function arrayBufferToStr(buffer) {
-  var binary = '';
-  var bytes = new Uint8Array(buffer);
-  var len = bytes.byteLength;
-  for (var i = 0; i < len; i++) {
-    binary += String.fromCharCode(bytes[i]);
-  }
-  return binary;
-}
+import { sdk } from './deps.ts';
 
 /*
   'req' variable has:
@@ -19,11 +9,11 @@ function arrayBufferToStr(buffer) {
   'res' variable has:
     'send(text, status)' - function to return text response. Status code defaults to 200
     'json(obj, status)' - function to return JSON response. Status code defaults to 200
-
+  
   If an error is thrown, a response with code 500 will be returned.
 */
 
-module.exports = async function (req, res) {
+export default async function (req: any, res: any) {
   const client = new sdk.Client();
 
   // You can remove services you don't use
@@ -41,36 +31,22 @@ module.exports = async function (req, res) {
     console.warn('Environment variables are not set. Function cannot use Appwrite SDK.');
   } else {
     client
-      .setEndpoint(req.variables['APPWRITE_FUNCTION_ENDPOINT'])
-      .setProject(req.variables['APPWRITE_FUNCTION_PROJECT_ID'])
-      .setKey(req.variables['APPWRITE_FUNCTION_API_KEY'])
-      .setSelfSigned(true);
+      .setEndpoint(req.variables['APPWRITE_FUNCTION_ENDPOINT'] as string)
+      .setProject(req.variables['APPWRITE_FUNCTION_PROJECT_ID'] as string)
+      .setKey(req.variables['APPWRITE_FUNCTION_API_KEY'] as string);
   }
 
   const bucketId = '638806130c168e7691e7';
 
   const files = await storage.listFiles(bucketId);
 
-  for (const file of files.files.slice(0, 1)) {
+  for (const file of files.files) {
+    console.log('file', file);
     const res = await storage.getFileView(bucketId, file.$id);
-    const resStr = arrayBufferToStr(res);
-
-    const words = arrayBufferToStr(buffer)
-      .split('')
-      .reduce((acc, curr, idx) => {
-        if (curr.trim()) {
-          const prevAcc = [...acc];
-          const lastIndex = acc.length > 0 ? acc.length - 1 : 0;
-          prevAcc[lastIndex] = (prevAcc[lastIndex] ?? '') + curr.trim();
-          return prevAcc;
-        }
-
-        return [...acc, ''];
-      }, [])
-      .filter(Boolean);
+    console.log(res, typeof res, file);
   }
 
   res.json({
     areDevelopersAwesome: true
   });
-};
+}

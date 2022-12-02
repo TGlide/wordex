@@ -1,5 +1,10 @@
 {
   "cssvar.files": [
     "src/styles/theme.css"
+  ],
+  "deno.enable": false,
+  "deno.unstable": true,
+  "deno.enablePaths": [
+    "functions"
   ]
 }
