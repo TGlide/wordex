@@ -32,8 +32,6 @@ export const load: PageLoad = async () => {
     [Query.equal('lang', get(locale)), Query.equal('created_at', todayFormatted)]
   );
 
-  console.log(data.documents);
-
   if (!data || data.documents.length === 0) {
     throw error(400);
   }
