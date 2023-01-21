@@ -126,7 +126,6 @@ const createStore = () => {
   });
 
   const checkVersion = () => {
-    console.log(projectVersion);
     if (get(store).version !== projectVersion) {
       store.set({ ...defaultValue, version: projectVersion });
     }

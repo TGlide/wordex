@@ -1,0 +1,33 @@
+{
+    "functions": [
+        {
+            "$id": "638805df6160944147b7",
+            "entrypoint": "src/index.js",
+            "events": [],
+            "execute": [],
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "name": "create_daily_words",
+            "path": "functions/create_daily_words",
+            "runtime": "node-16.0",
+            "schedule": "",
+            "timeout": 300
+        },
+        {
+            "$id": "6388703c4ad7d02e1b9e",
+            "entrypoint": "src/mod.ts",
+            "events": [],
+            "execute": [],
+            "ignore": [],
+            "name": "create_daily_words_deno",
+            "path": "functions/create_daily_words_deno",
+            "runtime": "deno-1.24",
+            "schedule": "",
+            "timeout": 300
+        }
+    ],
+    "projectId": "63c6f7df13bc6fff3fd4",
+    "projectName": "wordex"
+}
