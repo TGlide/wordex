@@ -10,18 +10,28 @@ import { Query } from 'appwrite';
 import { get } from 'svelte/store';
 import type { PageLoad } from './$types';
 import { error } from '@sveltejs/kit';
+import { store } from '$lib/store';
+import { isToday } from '$lib/utils/date';
 
 export const load: PageLoad = async () => {
-  // store.checkVersion();
-  // const storeData = get(store);
-  // if (isToday(storeData.date) && storeData.dailyWord.length > 0) {
-  //   return {
-  //     dailyWord: storeData.dailyWord,
-  //     wordList: null
-  //   };
-  // }
+  if (!browser) {
+    return {
+      dailyWord: 'thing',
+      wordList: null
+    };
+  }
+
+  store.checkVersion();
+  const storeData = get(store);
+  if (isToday(storeData.date) && storeData.dailyWord.length > 0) {
+    return {
+      dailyWord: storeData.dailyWord,
+      wordList: null
+    };
+  }
 
   const storedLocale = get(locale);
+
   const words = browser ? await fetchWords(storedLocale) : [];
 
   const todayFormatted = new Date().toISOString().split('T')[0];
