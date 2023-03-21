@@ -41,6 +41,7 @@
   "dependencies": {
     "@fontsource/eb-garamond": "^4.5.8",
     "@fontsource/raleway": "^4.5.8",
+    "@vercel/analytics": "^0.1.11",
     "appwrite": "^10.1.0",
     "class-variance-authority": "^0.2.1",
     "clipboard-copy": "^4.0.1",
