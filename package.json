@@ -1,24 +1,24 @@
 {
   "name": "wordex",
   "version": "0.0.6",
+  "private": true,
   "license": "AGPL-3.0-only",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-    "package": "vite package",
     "preview": "vite preview",
-    "test": "jest",
-    "check": "svelte-check --tsconfig ./tsconfig.json",
-    "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
-    "lint": "prettier --check --plugin-search-dir=. . && eslint .",
-    "format": "prettier --write --plugin-search-dir=. .",
-    "validate:commit": "yarn lint && yarn test",
-    "validate:push": "yarn lint && yarn test && yarn build"
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
   },
   "devDependencies": {
+    "@sveltejs/adapter-auto": "^2.0.0",
+    "@sveltejs/kit": "^1.5.0",
+    "svelte": "^3.54.0",
+    "svelte-check": "^3.0.1",
+    "tslib": "^2.4.1",
+    "typescript": "^5.0.0",
+    "vite": "^4.2.0",
     "@playwright/test": "^1.21.0",
-    "@sveltejs/adapter-auto": "next",
-    "@sveltejs/kit": "^1.0.0-next.570",
     "@types/jest": "^27.5.1",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
@@ -29,15 +29,9 @@
     "jest": "^28.1.0",
     "prettier": "^2.5.1",
     "prettier-plugin-svelte": "^2.5.0",
-    "svelte": "^3.44.0",
-    "svelte-check": "^2.2.6",
     "svelte-preprocess": "^4.10.1",
-    "ts-jest": "^28.0.2",
-    "tslib": "^2.3.1",
-    "typescript": "4.5.5",
-    "vite": "^4.0.4"
+    "ts-jest": "^28.0.2"
   },
-  "type": "module",
   "dependencies": {
     "@fontsource/eb-garamond": "^4.5.8",
     "@fontsource/raleway": "^4.5.8",
@@ -47,5 +41,6 @@
     "clipboard-copy": "^4.0.1",
     "feather-icons": "^4.29.0",
     "uuid": "^8.3.2"
-  }
+  },
+  "type": "module"
 }

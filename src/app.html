@@ -24,14 +24,16 @@
     />
     %sveltekit.head%
   </head>
-  <body>
+  <body data-sveltekit-preload-data="hover">
     <script>
-      const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+      const currentTheme = localStorage.getItem("theme")
+        ? localStorage.getItem("theme")
+        : null;
 
       if (currentTheme) {
-        document.documentElement.setAttribute('data-theme', currentTheme);
+        document.documentElement.setAttribute("data-theme", currentTheme);
       } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
+        document.documentElement.setAttribute("data-theme", "dark");
       }
     </script>
     <div style="display: contents">%sveltekit.body%</div>

@@ -2,7 +2,11 @@
   <h1><a href="/">Wordex</a></h1>
   <p>
     Wordex is a
-    <a href="https://github.com/TGlide/wordex" target="_blank" rel="noreferrer noopener">
+    <a
+      href="https://github.com/TGlide/wordex"
+      target="_blank"
+      rel="noreferrer noopener"
+    >
       open-source
     </a>
     <a
@@ -13,12 +17,16 @@
       wordle
     </a>
     clone, made with
-    <a href="https://kit.svelte.dev/" target="_blank" rel="noreferrer noopener">SvelteKit</a>.
+    <a href="https://kit.svelte.dev/" target="_blank" rel="noreferrer noopener"
+      >SvelteKit</a
+    >.
   </p>
   <p>
     Made by
-    <a href="https://www.thomasglopes.com" target="_blank" rel="noreferrer noopener"
-      >Thomas G. Lopes</a
+    <a
+      href="https://www.thomasglopes.com"
+      target="_blank"
+      rel="noreferrer noopener">Thomas G. Lopes</a
     >
   </p>
 </div>

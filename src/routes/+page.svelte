@@ -1,18 +1,17 @@
 <script lang="ts">
-  import Header from '$lib/components/Header.svelte';
-  import Keyboard from '$lib/components/Keyboard/Keyboard.svelte';
-  import StatsModal from '$lib/components/StatsModal.svelte';
-  import Toasts from '$lib/components/Toasts.svelte';
-  import WordGrid from '$lib/components/WordGrid/WordGrid.svelte';
-  import { store } from '$lib/store';
-  import { locale } from '$lib/store/locale';
-  import { wordStore } from '$lib/store/words';
-  import { triggerEndgame } from '$lib/utils/state';
-  import { fetchWords } from '$lib/utils/words';
-  import { onMount } from 'svelte';
-  import type { PageData } from './$types';
+  import Header from "$lib/components/Header.svelte";
+  import Keyboard from "$lib/components/Keyboard/Keyboard.svelte";
+  import StatsModal from "$lib/components/StatsModal.svelte";
+  import Toasts from "$lib/components/Toasts.svelte";
+  import WordGrid from "$lib/components/WordGrid/WordGrid.svelte";
+  import { store } from "$lib/store";
+  import { locale } from "$lib/store/locale";
+  import { wordStore } from "$lib/store/words";
+  import { triggerEndgame } from "$lib/utils/state";
+  import { fetchWords } from "$lib/utils/words";
+  import { onMount } from "svelte";
 
-  export let data: PageData;
+  export let data;
 
   onMount(async () => {
     store.setDailyWord(data.dailyWord);
